@@ -1,0 +1,50 @@
+/*Aquí estamos estableciendo que a todos los objetos mencionados, se les aplicarán los valores dentro de las llaves*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/*Convertimos los elementos señalados en un block, el cual movemos mediante cordenadas*/
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+/*Asignamos que los saltos de línea son de valor 1*/
+body {
+	line-height: 1;
+}
+/*Eliminamos los estilos predetermidaos de las listas, quitamos la viñeta*/
+ol, ul {
+	list-style: none;
+}
+/*Asignamos el valor none a las comillas de blockquote*/
+blockquote, q {
+	quotes: none;
+}
+/*Aignamos que no se generará un cambio al contenido de las comillas*/
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+/*Establece si los bordes de la tabla deben colapsar en un solo borde o separarse como en HTML estándar*/
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/*Realizado por: Meza Moreno Alejandra*/

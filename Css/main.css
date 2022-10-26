@@ -1,0 +1,81 @@
+/*Definimos la fuente que vamos a utilizar*/
+html {
+	font-size: 16px;
+    font-family: 'Lato', sans-serif;
+}
+/*Establecemos el color del body*/
+body {
+	background-color: #ECF3F2;
+}
+/*Le asignamos las siguientes características a la clase contenedor*/
+.container {
+	max-width: 450px;
+	height: auto;
+	background-color: #EFEFEF;
+	margin: 5% auto;
+	padding-bottom: 1rem;
+}
+/*Le asignamos las siguientes características a la clase form_top*/
+.form__top {
+	width: 100%;
+	text-align: center;
+	padding: 2rem 0 1rem;
+	border-top: solid .4rem #73B7ED;
+	margin-bottom: 1rem;
+}
+/*Le asignamos las siguientes características a la etiqueta h2 dentro de la clase form_top*/
+.form__top h2 {
+	font-weight: bold;
+	color: #CAC8C8;
+	font-size: 18px;
+}
+/*Le asignamos las siguientes características a la etiqueta span que está dentro del h2*/
+h2 span {
+	color: #73B7ED;
+}
+/*Le asignamos las siguientes características a la clase form_reg*/
+.form__reg {
+	padding: 0 2rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+/*Establecemos el margen y definimos que los botones tendrán un espacio entre ellos*/
+.btn__form {
+	display: flex;
+	justify-content: space-around;
+	margin-top: 1rem;
+}
+/*Le asignamos propiedades a las clases*/
+.input, .btn__submit, .btn__reset{
+	background-color: #EFEFEF;
+	padding: .5rem;
+	margin: .5rem 0;
+	border: none;
+	border-bottom: solid #C8C8C8 .2rem;
+	transition: all .5s;
+}
+/*Las siguientes propiedades se aplicarán cuando .input este activo*/
+.input:focus {
+	border-bottom: solid #73B7ED .2rem;
+}
+/*Le asignamos propiedades a los botones*/
+.btn__submit, .btn__reset {
+	width: 40%;
+	border-bottom: none;
+	background-color: #31B1E5;
+	color: white;
+}
+/*Le asignamos un color al botón*/
+.btn__reset {
+	background-color: #73B7ED;
+}
+/*El siguiente color se aplicará cuando el botón este activo*/
+.btn__submit:hover {
+	background-color: #4C9ED9;
+}
+/*El siguiente color se aplicará cuando el botón este activo*/
+.btn__reset:hover{
+	background-color: #73B7ED;
+}
+/*Realizado por: Meza Moreno Alejandra*/

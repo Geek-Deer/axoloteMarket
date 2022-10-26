@@ -1,0 +1,6396 @@
+    /*Comienza el código comentado por: Diego Sánchez Luna*/
+    /*Atributos generales que son aplicados a toda la página en general, independientemente de su clase,
+puede ser posterioromente editado en cada una*/
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    /*Se edita el body para que contenga una fuente base además de una tonalidad un poco más oscura,
+ haciendo de la página web algo más agradable a la vist*/
+    
+    body {
+        background: #EAEDED;
+        font-family: Arial, sans-serif;
+    }
+    /*Se le quita el subrayado a los hipervinculos*/
+    
+    a {
+        text-decoration: none;
+    }
+    /*Creamos una caja que contenga básicamente todo el contenido de la página web y que así sea
+ más sencillo acomodar toda la información*/
+    
+    .contenedor {
+        margin: auto;
+        width: 90%;
+        max-width: 1400px;
+    }
+    /*Se crea una especie de página blanca para resaltar toda la información*/
+    
+    main article {
+        background: #fff;
+        margin: 20px 0;
+        padding: 20px;
+        height: 1000px;
+    }
+    /* ------------------------- 
+        Enlaces del navbar  
+    ------------------------- */
+    /*Crea una base para el menú desplegable*/
+    
+    .menu {
+        background: #232F3E;
+        padding: 5px 0;
+        margin-bottom: 20px;
+    }
+    /*Contiene los botones del menú desplegable*/
+    
+    .menu .contenedor-botones-menu {
+        /* display: flex; */
+        display: none;
+        justify-content: space-between;
+    }
+    /*Crea los botones*/
+    
+    .menu .contenedor-botones-menu button {
+        font-size: 20px;
+        color: #fff;
+        padding: 10px 20px;
+        border: 1px solid transparent;
+        display: inline-block;
+        cursor: pointer;
+        background: none;
+    }
+    /*Añadimos el efecto del botón cuando colocamos el cursor encima del enlace*/
+    
+    .menu .contenedor-botones-menu button:hover {
+        border: 1px solid rgba(255, 255, 255, .4);
+    }
+    /*Hacemos desaparecer el botón de cerrar menú hasta que sea necesario*/
+    
+    .menu .contenedor-botones-menu .btn-menu-cerrar {
+        display: none;
+    }
+    /*Alínea el botón y lo hace visible*/
+    
+    .menu .contenedor-botones-menu .btn-menu-cerrar.activo {
+        display: inline-block;
+    }
+    /*Alineamos los enlaces de la barra de navegación*/
+    
+    .menu .contenedor-enlaces-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    /*Crea el bloque en el ue colocamos las categorías*/
+    
+    .menu .btn-departamentos {
+        color: #fff;
+        padding: 7px;
+        border-radius: 3px;
+        display: flex;
+        align-items: flex-end;
+        border: 1px solid transparent;
+        font-size: 12px;
+        cursor: default;
+    }
+    /*Cambia los márgenes de la letra itálica dentro de los departamentos*/
+    
+    .menu .btn-departamentos i {
+        margin-left: 20px;
+        position: relative;
+        bottom: 3px;
+    }
+    /*Hace el efecto del botón cuando se coloca el cursor por encima del botón*/
+    
+    .menu .btn-departamentos:hover {
+        border: 1px solid rgba(255, 255, 255, .4);
+    }
+    /*Separa el texto que coloquemos entre las etiquetas span y lo convierte en un bloque
+ que podemos alinear tranquilamente*/
+    
+    .menu .btn-departamentos span {
+        display: block;
+        font-size: 14px;
+        font-weight: bold;
+    }
+    /*Le da un pequeño borde a los enlaces dentro del navbar*/
+    
+    .menu .contenedor-enlaces-nav .enlaces a {
+        color: #ccc;
+        border: 1px solid transparent;
+        margin-left: 4px; 
+        padding: 7px;
+        border-radius: 3px;
+        font-size: 14px;
+        text-decoration: none;
+    }
+    /*Efecto de borde al colocar el cursor encima del texto*/
+    
+    .menu .contenedor-enlaces-nav .enlaces a:hover {
+        border: 1px solid rgba(255, 255, 255, .4);
+    }
+    /* ------------------------- 
+               GRID   
+    ------------------------- */
+    /*Permitimos que el grid que creemos se mueva conforme a lo que coloquemos en la página*/
+    
+    .contenedor-grid {
+        position: relative;
+    }
+    /*Se añaden las características de nuestro grid, colocando así las categorías y subcategorías
+ con un tamaño deinido, además*/
+    
+    .grid {
+        width: 100%;
+        display: none;
+        position: absolute;
+        top: 5px;
+        z-index: 1000;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 1fr;
+        grid-template-areas: "categorias subcategorias subcategorias subcategorias";
+    }
+    /*Activa el grid, es decir, lo muestra en pantalla*/
+    
+    .grid.activo {
+        display: grid;
+    }
+    /*Crea una base para el grid, antes de que realicemos cualquier cambio*/
+    
+    .grid::before {
+        content: "";
+        display: block;
+        background: transparent;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-bottom: 5px solid #fff;
+        position: absolute;
+        top: -5px;
+        left: 65px;
+    }
+    /*Altera las divisiones que creemos dentro de la grid*/
+    
+    .grid>div {
+        background: #fff;
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, .10);
+    }
+    /* ------------------------- 
+           Categorias
+    ------------------------- */
+    /*Crea los atributos del botón de regreso, cambiandole el color de fondo y de la 
+ fuente, además del cursor, tamaño, etc*/
+    
+    .grid .btn-regresar {
+        background: #232F3E;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        border-radius: 3px;
+        margin: 20px;
+        font-size: 16px;
+        cursor: pointer;
+        display: none;
+    }
+    /*Le añade un margen a la derecha para nuestro botoón de regreso*/
+    
+    .grid .btn-regresar i {
+        margin-right: 10px;
+    }
+    /*Crea la parte en la que colocamos los links a las categorías*/
+    
+    .grid .categorias {
+        grid-area: categorias;
+        padding-top: 10px;
+        min-height: 300px;
+        overflow: auto;
+    }
+    /*Retira la visualizacion de los subtitulos*/
+    
+    .grid .categorias .subtitulo {
+        display: none;
+    }
+    /*Cambia el estilo de los links para ir a cada categoría, cambiando
+el color de la fuente, su tamaño, etc*/
+    
+    .grid .categorias a {
+        color: #000;
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 20px;
+    }
+    /*Elimina la visalización de los links en itálica dentro del apartado de
+categorías*/
+    
+    .grid .categorias a i {
+        display: none;
+    }
+    /*Añade un efecto naranja en los links de las categorías al poner el
+cursor encima*/
+    
+    .grid .categorias a:hover {
+        color: #E47911;
+        font-weight: bold;
+    }
+    /*Cambia el display de los links en itálica al poner el cursor encima*/
+    
+    .grid .categorias a:hover i {
+        display: inline-block;
+    }
+    /* -------------------------
+
+
+          Subcategorias 
+
+
+   ------------------------- */
+    /*Crea el área de ñas subcategorias en el grid*/
+    
+    .grid .contenedor-subcategorias {
+        grid-area: subcategorias;
+    }
+    /*Le da las medidas a la grid de subcaterías, cambia el tamaño de las
+filas, columnas, etc*/
+    
+    .grid .subcategoria {
+        display: none;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr;
+        height: 100%;
+    }
+    /*Activa la grid de subcategorias*/
+    
+    .grid .subcategoria.activo {
+        display: grid;
+    }
+    /*Permite agregar las imágenes de las subcategorias*/
+    
+    .grid .subcategoria img {
+        width: 100%;
+        vertical-align: top;
+        height: 100%;
+        object-fit: cover;
+    }
+    /*Agrega los enlaces a cada subcategoría para hacer la búsqueda más sencilla*/
+    
+    .grid .enlaces-subcategoria {
+        padding-top: 10px;
+        height: 100%;
+        max-height: 300px;
+        overflow: auto;
+    }
+    /*Permite alinear los enlaces en la sección de la subcategoría
+con el display de bloques*/
+    
+    .grid .enlaces-subcategoria a {
+        color: #000;
+        display: block;
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+    /*Cambia el color del texto a naranja en los enlaces al colocar el cursor encima
+del mismo*/
+    
+    .grid .enlaces-subcategoria a:hover {
+        color: #E47911;
+    }
+    /*Le da color naranja a los subtitulos, además de agregarles padding
+a los lados y cambiar el tamaño de la letras a 18 pixeles*/
+    
+    .grid .subtitulo {
+        font-size: 18px;
+        font-weight: normal;
+        color: #E47911;
+        padding: 10px 20px;
+    }
+    /*Aumenta la altura de los links en el banner de la subcategoría */
+    
+    .grid .banner-subcategoria a {
+        display: block;
+        height: 100%;
+    }
+    /*Ayuda a alinear las imágenes de la subcategoría*/
+    
+    .grid .galeria-subcategoria {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: start;
+    }
+    /*Edita el tamaño de los links en las imágenes de la subcategoría*/
+    
+    .grid .galeria-subcategoria a {
+        width: 50%;
+        height: 50%;
+    }
+    /*Slideshow*/
+    /*Crea la base para los slides*/
+    
+    .home {
+        height: 40vh;
+        overflow: hidden;
+        position: relative;
+    }
+    /*Añade las animaciones de cada slide, además del tamaño y las posición*/
+    
+    .home .slide {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        z-index: 1;
+        display: none;
+        padding: 0 15px;
+        animation: slide 2s ease;
+    }
+    /*Clase que activa el slide, se usa en el js*/
+    
+    .home .slide.active {
+        display: flex;
+    }
+    /*Animación que nos permite mover la imagen del slide, cambiandolo de un tamaño
+    ligeramente más grande hasta el original*/
+    
+    @keyframes slide {
+        0% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+    /*Crea el contenedor para todo el slideshow (carrusel)*/
+    
+    .container {
+        max-width: 1170px;
+        margin: auto;
+    }
+    /*Provoca que el contenedor se adapte a la página*/
+    
+    .home .container {
+        flex-grow: 1;
+    }
+    /*Crea una división para el texto que se vaya a colocar encima de la imagen*/
+    
+    .home .caption {
+        width: 80%;
+    }
+    /*Le da un formato base al texto encima de la imagen
+    */
+    
+    .home .caption h1 {
+        font-size: 42px;
+        color: #000000;
+        margin: 0 100px 30px;
+    }
+    /*Le da formato y animación al texto h1 encima de la imagen*/
+    
+    .home .slide.active .caption h1 {
+        opacity: 0;
+        animation: captionText .5s ease forwards;
+        animation-delay: 1s;
+    }
+    /*Le da formato al texto extra que se agregue encima de la imagen, una especie
+    de subtitulo*/
+    
+    .home .caption p {
+        font-size: 18px;
+        margin: 15px 100px 30px;
+        color: #222222;
+    }
+    /*añade la animación y el delay del texto encima de la imagen*/
+    
+    .home .slide.active .caption p {
+        opacity: 0;
+        animation: captionText .5s ease forwards;
+        animation-delay: 1.2s;
+    }
+    /*En caso de que se coloquen links encima de la imagen, los convierte en un botón*/
+    
+    .home .caption a {
+        display: inline-block;
+        padding: 10px 30px;
+        background-color: #000000;
+        text-decoration: none;
+        color: #ffffff;
+    }
+    /*Inicia la animacion con opacidad 0 para hacer aparecer el texto*/
+    
+    .home .slide.active .caption a {
+        opacity: 0;
+        animation: captionText .5s ease forwards;
+        animation-delay: 1.4s;
+    }
+    /*Crea la animación del texto, desde valores negativos de las X hasta un valor
+    0, es decir, en la esquina del contenedor*/
+    
+    @keyframes captionText {
+        0% {
+            opacity: 0;
+            transform: translateX(-100px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0px);
+        }
+    }
+    /*Crea los controles para cambiar de slide al anterior y al siguiente*/
+    
+    .home .controls .prev,
+    .home .controls .next {
+        position: absolute;
+        z-index: 2;
+        top: 50%;
+        height: 40px;
+        width: 40px;
+        margin-top: -20px;
+        color: #ffffff;
+        background-color: #E47911;
+        text-align: center;
+        line-height: 40px;
+        font-size: 20px;
+        cursor: pointer;
+        transition: all .5s ease;
+    }
+    /*Agrega un efecto a los botones de anterior y siguiente al poner el cursor encima*/
+    
+    .home .controls .prev:hover,
+    .home .controls .next:hover {
+        background-color: #000000;
+    }
+    /*Cambia el margen izquierdo del botón anterior*/
+    
+    .home .controls .prev {
+        left: 0;
+    }
+    /*Cambia el margen derecho del botón siguiente*/
+    
+    .home .controls .next {
+        right: 0;
+    }
+    /*Crea la base para los indicadores que nos dicen en que slide se encuentra
+    el carrusel*/
+    
+    .home .indicator {
+        position: absolute;
+        left: 50%;
+        top: 90%;
+        z-index: 2;
+        transform: translateX(-50%);
+    }
+    /*Crea el contenido de dichos indicadores*/
+    
+    .home .indicator div {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        color: #ffffff;
+        background-color: rgba(0, 0, 0, .4);
+        border-radius: 20%;
+        text-align: center;
+        line-height: 25px;
+        margin: 0 3px;
+    }
+    /*cambia el color de fondo del indicador que se encuentre activo actualmente*/
+    
+    .home .indicator div.active {
+        background-color: #000;
+    }
+    /*responsive*/
+    /*Hace de los controles invisibles*/
+    
+    @media(max-width: 767px) {
+        .controls {
+            display: none;
+        }
+    }
+    /*Importa las fuentes que se van a utilizar*/
+    
+    @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800');
+    @import url('https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700');
+    /*------------------------------------------------------------------ Categories Shop -------------------------------------------------------------------*/
+    /*Agrega espacio en blanco alrededor del contenido del elemento*/
+    
+    .categories-shop {
+        padding: 70px 0px;
+    }
+    /*Básicamente crea una caja o contenedor en el que se coloca el contenido*/
+    
+    .shop-cat-box {
+        margin-bottom: 30px;
+        position: relative;
+        padding: 3px;
+        overflow: hidden;
+        border: 0px solid #000000;
+        box-shadow: 9px 9px 30px 0px rgba(0, 0, 0, 0.3);
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease-in-out 0s;
+    }
+    /*Ayuda a organizar especificamente las imágenes dentro de dichos contenedores*/
+    
+    .shop-cat-box img {
+        margin: -10px 0 0 -10px;
+        max-width: none;
+        width: -webkit-calc(100% + 10px);
+        width: calc(100% + 10px);
+        opacity: 0.9;
+        -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+        transition: opacity 0.35s, transform 0.35s;
+        -webkit-transform: translate3d(10px, 10px, 0);
+        transform: translate3d(10px, 10px, 0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+    /*Le agrega un efecto a las imágenes de los contenedores, lo vuelve ligeramente transparente
+    y cambia su posicion 3d*/
+    
+    .shop-cat-box:hover img {
+        opacity: 0.6;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+    /*Cambia los enlaces dentro de los contenedores para darles márgenes muy especificos además
+    de alinearlos y darles color*/
+    
+    .shop-cat-box a {
+        position: absolute;
+        z-index: 2;
+        bottom: 0px;
+        left: 0px;
+        right: 0;
+        margin: 0 auto;
+        text-align: center;
+        border: none;
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 700;
+        padding: 12px 0px;
+    }
+    /*Añade color de fondo y espacio en blanco a los productos que agreguemos*/
+    
+    .box-add-products {
+        padding: 70px 0px;
+        background-color: #f4f4f4;
+    }
+    /*Contenedor para las ofertas*/
+    
+    .offer-box {
+        position: relative;
+        overflow: hidden;
+    }
+    /*Contenedor para las ofertas en productos específicos*/
+    
+    .offer-box-products {
+        box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease-in-out 0s;
+    }
+    /*Efecto que se aplica a dichos contenedores al colocar el cursor encima, mueve
+    el contenedor hacia arriba y le agrega una ligera sombra*/
+    
+    .offer-box-products:hover {
+        -webkit-transform: translateY(6px);
+        transform: translateY(6px);
+        box-shadow: 0px 9px 15px 0px rgba(0, 0, 0, 0.1);
+    }
+    /*------------------------------------------------------------------ Products -------------------------------------------------------------------*/
+    /*Le agrega un margen a la parte inferior de los títulos*/
+    
+    .title-all {
+        margin-bottom: 30px;
+    }
+    /*Cambia los atributos de los encabezados h1 dentro de la clase, añadiendole peso a la fuente,
+    obligandola a ser de color negro y cambiando su tamaño a 32 pixeles*/
+    
+    .title-all h1 {
+        font-size: 32px;
+        font-weight: 700;
+        color: #000000;
+    }
+    /*Le da un formato general a los parrafos dentro de la misma clase, cambiando el color de la letra
+    a un tono grisáceo y cambiando el tamaño a 16 pixeles*/
+    
+    .title-all p {
+        color: #999999;
+        font-size: 16px;
+    }
+    /*Añade espacio en blanco alrededor de los productos, creando una especie de caja/contenedor*/
+    
+    .products-box {
+        padding: 70px 0px;
+    }
+    /*Añade un margen inferior al menú especial*/
+    
+    .special-menu {
+        margin-bottom: 40px;
+    }
+    /*Permite que se muestre el grupo de botones de filtro, además de ayudar a alinearlo*/
+    
+    .filter-button-group {
+        display: inline-block;
+    }
+    /*Cambia los atributos de los botones dentro del grupo, asignándoles color de fondo, letra,
+    un cursor diferente, etc*/
+    
+    .filter-button-group button {
+        background: #b0b435;
+        color: #ffffff;
+        border: none;
+        cursor: pointer;
+        padding: 5px 30px;
+        font-size: 18px;
+    }
+    /*Cambia el color de fondo del botón activo*/
+    .filter-button-group button.active {
+        background: #000000;
+    }
+    /*Crea un margen inferior para productos individuales*/
+    .products-single {
+        overflow: hidden;
+        position: relative;
+        margin-bottom: 30px;
+    }
+    /*Cambia la posición de la imagen en el contenedor a relativa y evita que 
+    se visualice cualquier tipo de overflow*/
+    .products-single .box-img-hover {
+        overflow: hidden;
+        position: relative;
+    }
+    /*Centra la imagen, retira el margen y lo acomoda en forma de bloque*/
+    .box-img-hover img {
+        margin: 0 auto;
+        text-align: center;
+        display: block;
+    }
+    /*Organiza el label para colocarlo en el contenedor*/
+    .type-lb {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        z-index: 8;
+    }
+    /*Le da características y fondo especial a los label que contengan la palabra OFERTA
+    dentro del contenedor para así resaltar los productos con ofertas especiales*/
+    .type-lb .sale {
+        background: #b0b435;
+        color: #ffffff;
+        padding: 2px 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    /*Le da características y fondo especial a los label que contengan la palabra NUEVO
+    dentro del contenedor para asi resaltar los productos recien agregados*/
+    .type-lb .new {
+        background: #000000;
+        color: #ffffff;
+        padding: 2px 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    /*Formato básico para la escritura dentro del contenedor*/
+    .why-text {
+        background: #f5f5f5;
+        padding: 15px;
+    }
+    /*Cambia el tamaño y ancho de la letra h4 además de agregar espacio en blanco debajo
+    de este mismo*/
+    .why-text h4 {
+        font-size: 16px;
+        font-weight: 700;
+        padding-bottom: 15px;
+    }
+    /*Cambia el tamaño, uente, peso, color y fondo de la letra h5 para resaltar aún más
+    el "encabezado"*/
+    .why-text h5 {
+        font-size: 18px;
+        font-family: 'Poppins', sans-serif;
+        padding: 4px;
+        display: inline-block;
+        background: #b0b435;
+        color: #ffffff;
+        font-weight: 600;
+    }
+    /*Crea una mascara de contenido encima de la imagen del producto*/
+    .mask-icon {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+    }
+    /*Permite colocar botones en dicha máscara que se muevan junto con esta*/
+    .mask-icon ul {
+        display: inline-block;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+    /*Le agrega color de fondo a los textos de lista ul*/
+    .mask-icon ul li {
+        background: #b0b435;
+    }
+    /*Cambia especificamente el color de las listas ul con enlace
+    por blanco*/
+    .mask-icon ul li a {
+        color: #ffffff;
+        padding: 5px 10px;
+        display: block;
+    }
+    /*Mascara para agregar al carrito*/
+    .mask-icon a.cart {
+        background: #b0b435;
+        position: absolute;
+        bottom: 0;
+        left: 0px;
+        padding: 10px 20px;
+        font-weight: 700;
+        color: #ffffff;
+    }
+    /*Animación para el botón de agregar al carrito*/
+    .mask-icon a.cart:hover {
+        background: #000000;
+        color: #ffffff;
+    }
+    /**/
+    .mask-icon ul li a:hover {
+        background: #000000;
+        color: #ffffff;
+    }
+    
+    .products-single .mask-icon {
+        background: rgba(1, 1, 1, 0.5);
+        top: -100%;
+        -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+        opacity: 0;
+        -webkit-transition: all 0.3s ease-out 0.5s;
+        -moz-transition: all 0.3s ease-out 0.5s;
+        -o-transition: all 0.3s ease-out 0.5s;
+        -ms-transition: all 0.3s ease-out 0.5s;
+        transition: all 0.3s ease-out 0.5s;
+    }
+    
+    .products-single:hover .mask-icon {
+        -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=100)";
+        filter: alpha(opacity=100);
+        opacity: 1;
+        top: 0px;
+        -webkit-transition-delay: 0s;
+        -moz-transition-delay: 0s;
+        -o-transition-delay: 0s;
+        -ms-transition-delay: 0s;
+        transition-delay: 0s;
+        -webkit-animation: bounceY 0.9s linear;
+        -moz-animation: bounceY 0.9s linear;
+        -ms-animation: bounceY 0.9s linear;
+        animation: bounceY 0.9s linear;
+    }
+    
+    @keyframes bounceY {
+        0% {
+            transform: translateY(-205px);
+        }
+        40% {
+            transform: translateY(-100px);
+        }
+        65% {
+            transform: translateY(-52px);
+        }
+        82% {
+            transform: translateY(-25px);
+        }
+        92% {
+            transform: translateY(-12px);
+        }
+        55%,
+        75%,
+        87%,
+        97%,
+        100% {
+            transform: translateY(0px);
+        }
+    }
+    
+    @-moz-keyframes bounceY {
+        0% {
+            -moz-transform: translateY(-205px);
+        }
+        40% {
+            -moz-transform: translateY(-100px);
+        }
+        65% {
+            -moz-transform: translateY(-52px);
+        }
+        82% {
+            -moz-transform: translateY(-25px);
+        }
+        92% {
+            -moz-transform: translateY(-12px);
+        }
+        55%,
+        75%,
+        87%,
+        97%,
+        100% {
+            -moz-transform: translateY(0px);
+        }
+    }
+    
+    @-webkit-keyframes bounceY {
+        0% {
+            -webkit-transform: translateY(-205px);
+        }
+        40% {
+            -webkit-transform: translateY(-100px);
+        }
+        65% {
+            -webkit-transform: translateY(-52px);
+        }
+        82% {
+            -webkit-transform: translateY(-25px);
+        }
+        92% {
+            -webkit-transform: translateY(-12px);
+        }
+        55%,
+        75%,
+        87%,
+        97%,
+        100% {
+            -webkit-transform: translateY(0px);
+        }
+    }
+    /*------------------------------------------------------------------ All Pages -------------------------------------------------------------------*/
+    
+    .all-title-box {
+        background: url("../images/all-bg-title.jpg") no-repeat center center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        text-align: center;
+        background-attachment: fixed;
+        padding: 70px 0px;
+        position: relative;
+    }
+    
+    .all-title-box::before {
+        background: rgba(0, 0, 0, 0.6);
+        content: "";
+        position: absolute;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+    }
+    
+    .all-title-box h2 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #ffffff;
+        float: left;
+        padding: 10px 0px;
+    }
+    
+    .all-title-box .breadcrumb {
+        background: #b0b435;
+        margin: 0px;
+        display: inline-block;
+        border-radius: 0px;
+        float: right;
+    }
+    
+    .all-title-box .breadcrumb li {
+        display: inline-block;
+        color: #000000;
+        font-size: 16px;
+    }
+    
+    .all-title-box .breadcrumb li a {
+        color: #ffffff;
+        font-size: 16px;
+    }
+    
+    .all-title-box .breadcrumb-item+.breadcrumb-item::before {
+        color: #000000;
+    }
+    
+    .about-box-main {
+        padding: 70px 0px;
+    }
+    
+    .noo-sh-title {
+        font-size: 28px;
+        text-transform: uppercase;
+        font-style: normal;
+        font-weight: 700;
+        margin-bottom: 30px;
+    }
+    
+    .noo-sh-title-top {
+        font-size: 28px;
+        text-transform: uppercase;
+        font-style: normal;
+        font-weight: 700;
+        margin-bottom: 0px;
+    }
+    
+    .about-box-main p {
+        padding-bottom: 20px;
+    }
+    
+    .service-block-inner {
+        padding: 15px 20px;
+        position: relative;
+        margin-bottom: 30px;
+    }
+    
+    .about-box-main a {
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 700;
+        border: none;
+    }
+    /*Le agrega espacio en blanco a los bordes del botón about*/
+    .about-box-main a.btn {
+        padding: 12px 15px;
+    }
+    /*Crea un bloque de servicio como pseudoelemento antes de la etiqueta*/
+    .service-block-inner::before {
+        content: "";
+        width: 100%;
+        height: 5px;
+        border-radius: 0px;
+        background: #000000;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: all 0.5s ease 0s;
+    }
+    /*Crea un bloque de servicio como pseudoelemento despues de la etiqueta*/
+    .service-block-inner::after {
+        content: "";
+        width: 100%;
+        height: 0;
+        border-radius: 0px;
+        background: #b0b435;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        transition: all 0.5s ease 0s;
+    }
+    /*Cambia la fuente h3 del botón a mayusculas con peso mayor y tamaño mayor*/
+    .service-block-inner h3 {
+        font-size: 24px;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+    /*Cambia la fuente general de los parrafos dentro de los botones*/
+    .service-block-inner p {
+        margin: 0px;
+        font-size: 16px;
+        font-weight: 300;
+        padding-bottom: 0px;
+    }
+    /*Termina la parte comentada por Diego Sánchez Luna*/
+    .service-block-inner:hover::after {
+        height: 100%;
+    }
+    
+    .service-block-inner:hover h3 {
+        color: #ffffff;
+        transition: all 0.5s ease 0s;
+    }
+    
+    .service-block-inner:hover p {
+        color: #ffffff;
+        transition: all 0.5s ease 0s;
+    }
+    
+    .shop-box-inner {
+        padding: 70px 0px;
+    }
+    
+    .search-product {
+        position: relative;
+    }
+    
+    .search-product input[type="text"] {
+        background: #333333;
+        border: 0;
+        box-shadow: none;
+        border-radius: 0;
+        color: #ffffff;
+        height: 55px;
+        font-weight: 300;
+        font-size: 16px;
+        margin-bottom: 15px;
+        padding: 0 20px;
+        -webkit-transition: all .5s ease;
+        -moz-transition: all .5s ease;
+        transition: all .5s ease;
+        width: 100%;
+        outline: 0;
+    }
+    
+    .search-product .form-control::-moz-placeholder {
+        color: #ffffff;
+        opacity: 1;
+    }
+    
+    .search-product button {
+        background: #000000;
+        color: #ffffff;
+        font-size: 18px;
+        position: absolute;
+        right: 0px;
+        padding: 12px 15px;
+        top: 0;
+        line-height: 27px;
+        border: none;
+        cursor: pointer;
+        height: 100%;
+    }
+    
+    .search-product button:hover {
+        background: #b0b435;
+    }
+    
+    .filter-sidebar-left {
+        margin-bottom: 20px;
+    }
+    
+    .title-left {
+        font-size: 16px;
+        border-bottom: 3px solid #000000;
+        margin-bottom: 20px;
+    }
+    
+    .title-left h3 {
+        font-weight: 700;
+    }
+    
+    .list-group-item {
+        border: none;
+        padding: 5px 20px;
+        font-size: 14px;
+    }
+    
+    .text-muted {
+        padding: 10px 0px;
+    }
+    
+    .list-group-item[data-toggle="collapse"]::after {
+        width: 0;
+        height: 0;
+        position: absolute;
+        top: calc(50% - 12px);
+        right: 10px;
+        content: '';
+        -webkit-transition: top .2s, -webkit-transform .2s;
+        transition: top .2s, -webkit-transform .2s;
+        transition: transform .2s, top .2s;
+        transition: transform .2s, top .2s, -webkit-transform .2s;
+        font-family: FontAwesome;
+        content: "\f105";
+    }
+    
+    .list-group-tree .list-group-collapse .list-group {
+        margin-left: 25px;
+        border-left: 1px solid #ced4da;
+    }
+    
+    .list-group-tree .list-group-item.active {
+        color: #b0b435;
+        background-color: #fff;
+        font-weight: 700;
+    }
+    
+    .list-group-tree .list-group-collapse .list-group>.list-group-item::before {
+        position: absolute;
+        top: 14px;
+        left: 0;
+        content: '';
+        width: 8px;
+        height: 1px;
+        background-color: #ced4da;
+    }
+    
+    .list-group-tree .list-group-item:hover {
+        color: #b0b435;
+        background-color: #fff;
+        outline: 0;
+        font-weight: 700;
+    }
+    
+    .brand-box {
+        display: inline-block;
+        width: 100%;
+        height: 259px;
+        position: relative;
+    }
+     /*------------------------------------------------------------------ Blog -------------------------------------------------------------------*/
+    /*Comienza el código comentado por: Meza Moreno Alejandra*/
+    /*Le asignamos las siguientes características a la clase .lastest-blog*/
+    .latest-blog {
+        padding: 70px 0px;
+        background: #f5f5f5;
+    }
+    /*Le asignamos las siguientes características a la clase .blog-box*/
+    .blog-box {
+        -webkit-box-shadow: 0px 5px 35px 0px rgba(148, 146, 245, 0.15);
+        box-shadow: 0px 5px 35px 0px rgba(148, 146, 245, 0.15);
+        background: #ffffff;
+        margin-bottom: 30px;
+    }
+    /*Definimos que la posición será relativa*/
+    .blog-content {
+        position: relative;
+    }
+    /*Declaramos el tamaño del título*/
+    .title-blog {
+        padding: 40px 30px 40px 30px;
+    }
+    /*Le asignamos las siguientes características a la etiqueta h3*/
+    .title-blog h3 {
+        font-size: 20px;
+        font-weight: 700;
+        color: #000000;
+    }
+    /*Definimos que el margen será de 0*/
+    .title-blog p {
+        margin: 0px;
+    }
+    /*Le asignamos las siguientes características a la clase .option-blogr*/
+    .option-blog {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    /*Le asignamos a la etiqueta li el siguiente valor*/
+    .option-blog li {
+        display: inline-block;
+    }
+    /*Le asignamos las siguientes características a la etiqueta a, dentro de la etiqueta li*/
+    .option-blog li a {
+        background: #000000;
+        display: inline-block;
+        font-size: 18px;
+        color: #ffffff;
+        width: 34px;
+        height: 34px;
+        text-align: center;
+        line-height: 34px;
+    }
+    /*Cuando se pase el mouse sobre la opción, se aplicarán los cambios dentro de las llaves*/
+    .option-blog li a:hover {
+        background: #b0b435;
+        color: #ffffff;
+    }
+    /*Le agregamos un color a .tooltip-inner*/
+    .tooltip-inner {
+        background-color: #b0b435;
+    }
+    /*Le asignamos las siguientes características a .tooltip.bs-tooltip-right*/
+    .tooltip.bs-tooltip-right .arrow:before {
+        border-right-color: #b0b435 !important;
+        padding-top: 0px !important;
+        top: 0px !important;
+    }
+    /*Le asignamos las siguientes características a .tooltip.bs-tooltip-left*/
+    .tooltip.bs-tooltip-left .arrow:before {
+        border-left-color: #b0b435 !important;
+        padding-top: 0px !important;
+        padding-right: 5px !important;
+        top: 0px !important;
+    }
+    /*Le asignamos las siguientes características a .tooltip.bs-tooltip-bottom*/
+    .tooltip.bs-tooltip-bottom .arrow:before {
+        border-right-color: #b0b435 !important;
+    }
+    /*Le asignamos las siguientes características a .tooltip.bs-tooltip-top*/
+    .tooltip.bs-tooltip-top .arrow:before {
+        border-top-color: #b0b435 !important;
+        padding-top: 0px !important;
+        top: 0px !important;
+    }
+    /*------------------------------------------------------------------ Instagram Feed -------------------------------------------------------------------*/
+    /*Le asignamos las siguientes características a la clase que contiene nuestro instagram*/
+    .instagram-box {
+        padding: 70px 0px;
+        background: url(../images/ins-bg.jpg) no-repeat center center;
+        background-size: auto auto;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        position: relative;
+    }
+    /*Le asignamos las siguientes características a la clase que contiene nuestro instagram*/
+    .instagram-box::before {
+        background: rgba(0, 0, 0, 0.9);
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+        content: "";
+        position: absolute;
+        z-index: 0;
+    }
+    /*Aquí estamos declarando los elementos necesarios para 
+    lograr que nuestro feed de instagram tenga movimiento, botón de anterior*/
+    .main-instagram.owl-carousel .owl-nav button.owl-prev {
+        background: #000000;
+        position: absolute;
+        z-index: 1;
+        display: block;
+        height: 100%;
+        width: 50px;
+        line-height: 0px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #ffffff;
+        top: 0;
+        padding: 0;
+        margin-top: 0;
+        opacity: 1;
+        left: 0px;
+        -webkit-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+    }
+    /*Aquí estamos declarando los elementos necesarios para 
+    lograr que nuestro feed de instagram tenga movimiento, botón de siguiente*/
+    .main-instagram.owl-carousel .owl-nav button.owl-next {
+        background: #000000;
+        position: absolute;
+        z-index: 1;
+        display: block;
+        height: 100%;
+        width: 50px;
+        line-height: 0px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #ffffff;
+        top: 0;
+        padding: 0;
+        margin-top: 0;
+        opacity: 1;
+        right: 0px;
+        -webkit-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+    }
+    /*Aquí declaramos que cuando el mouse este sobre estos elementos, cambiarán de color*/
+    .main-instagram.owl-carousel .owl-nav button.owl-next:hover,
+    .main-instagram.owl-carousel .owl-nav button.owl-prev:hover {
+        background: #b0b435;
+    }
+    /*Declaramos la posición de .ins-inner-box*/
+    .ins-inner-box {
+        position: relative;
+    }
+    /*Aquí asignamos las características de la clase .hov-in*/
+    .hov-in {
+        opacity: 0;
+        background: rgba(211, 59, 51, 0.5);
+        bottom: -100%;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all 0.3s ease-out 0.5s;
+        -moz-transition: all 0.3s ease-out 0.5s;
+        -o-transition: all 0.3s ease-out 0.5s;
+        -ms-transition: all 0.3s ease-out 0.5s;
+        transition: all 0.3s ease-out 0.5s;
+        text-align: center;
+        display: table;
+    }
+    /*Aquí declaramos la posición de .hov-in a*/
+    .hov-in a {
+        display: table-cell;
+        vertical-align: middle;
+        height: 100%;
+    }
+    /*Le asignamos las siguientes características a  la etiqueta i, dentro de .hov-in*/
+    .hov-in i {
+        color: #000000;
+        font-size: 48px;
+        position: relative;
+        z-index: 2;
+    }
+    /*Aquí declaramos que cuando el mouse esté sobre este elemento, cambiará de color*/
+    .hov-in a i:hover {
+        color: #ffffff;
+    }
+    /*Aquí declaramos que cuando el mouse esté sobre este elemento, cambiará de color*/
+    .ins-inner-box:hover .hov-in {
+        bottom: 0;
+        opacity: 1;
+    }
+    /*------------------------------------------------------------------ Footer Main -------------------------------------------------------------------*/
+    /*Aquí declaramos el tamaño y fondo de .footer-main*/
+    .footer-main {
+        padding: 70px 0px;
+        background: #010101;
+    }
+    /*Aquí le asignamos un tamaño al borde, color, y posición a .footer-main hr*/
+    .footer-main hr {
+        border-top: 1px solid rgba(255, 255, 255, .6);
+    }
+    /*Aquí asignamos el tamaño del margen*/
+    .footer-top-box {
+        margin-bottom: 30px;
+    }
+    /*Aquí asignamos características a la etiqueta h3, dentro de .footer-top-box*/
+    .footer-top-box h3 {
+        color: #ffffff;
+        position: relative;
+        font-size: 20px;
+    }
+    /*Aquí le asignamos las siguientes características a la etiqueta h3*/
+    .footer-top-box h3::before {
+        border-bottom: 2px solid #b0b435;
+        content: "";
+        height: 3px;
+        width: 50%;
+        position: absolute;
+        bottom: 3px;
+        left: 0px;
+    }
+    /*Le asignamos el valor del margen*/
+    .list-time {
+        margin-top: 15px;
+    }
+    /*Aquí le asignamos características a la etiqueta li, dentro de .list-time*/
+    .footer-top-box .list-time li {
+        color: #ffffff;
+        font-size: 16px;
+        display: block;
+        float: none;
+    }
+    /*Aquí definimos el margen y posición del .newsletter-box*/
+    .newsletter-box {
+        margin-top: 15px;
+        position: relative;
+    }
+    /*Aquí le asignamos el diseño al .newsletter-bow input*/
+    .newsletter-box input {
+        height: 40px;
+        border: none;
+        padding: 0 10px;
+        background: transparent;
+        border-radius: 0;
+        background: #fff;
+        padding: 0 20px;
+        width: 100%;
+    }
+    /*Aquí le asignamos características a la etiqueta i*/
+    .newsletter-box i {
+        position: absolute;
+        right: 15px;
+        top: 10px;
+        font-size: 20px;
+    }
+    /*Aquí le asignamos el diseño al botón del .newsletter-box*/
+    .newsletter-box button {
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 500;
+    }
+    /*Aquí le asignamos características a la etiqueta p*/
+    .footer-top-box p {
+        padding-bottom: 15px;
+        color: #cccccc;
+    }
+    /*Aquí le asignamos características a la etiqueta ul*/
+    .footer-top-box ul {
+        display: inline-block;
+    }
+    /*Aquí le asignamos una posición a las etiquetas ul y li*/
+    .footer-top-box ul li {
+        float: left;
+        margin-right: 5px;
+    }
+    /*Aquí les damos diseño a las etiquetas ul, li y a*/
+    .footer-top-box ul li a {
+        color: #ffffff;
+        display: inline-block;
+        width: 36px;
+        height: 36px;
+        border: 2px solid #ffffff;
+        text-align: center;
+        line-height: 32px;
+    }
+    /*Aquí declaramos que cuando el mouse este sobre las etiquetas ul, li y a, cambiará de color*/
+    .footer-top-box ul li a:hover {
+        color: #b0b435;
+        border-color: #b0b435;
+    }
+    /*Se le asigna un valor de margen a las clases mencionadas*/
+    .footer-widget,
+    .footer-link,
+    .footer-link-contact {
+        margin-top: 15px;
+    }
+    /*Aquí le asignamos características a la etiqueta h4 dentro de .footer-widget*/
+    .footer-widget h4 {
+        color: #ffffff;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+        position: relative;
+        font-weight: 700;
+    }
+    /*Aquí le asignamos características a la etiqueta h4 dentro de .footer-widget, y estas se agregarán antes*/
+    .footer-widget h4::before {
+        border-bottom: 3px solid #b0b435;
+        content: "";
+        height: 3px;
+        width: 100%;
+        position: absolute;
+        bottom: 3px;
+        left: 0px;
+    }
+    /*Aquí le asignamos características a la etiqueta p que está dentro de .footer-widget*/
+    .footer-widget p {
+        color: #cccccc;
+        font-weight: 400;
+        font-size: 14px;
+        padding-bottom: 20px;
+    }
+    /*Aquí le asignamos características a la etiqueta h4 dentro de .footer-link*/
+    .footer-link h4 {
+        color: #ffffff;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+        position: relative;
+        font-weight: 700;
+    }
+    /*Aquí le asignamos características a la etiqueta h4 dentro de .footer-link, esto se agregará antes*/
+    .footer-link h4::before {
+        border-bottom: 3px solid #b0b435;
+        content: "";
+        height: 3px;
+        width: 100%;
+        position: absolute;
+        bottom: 3px;
+        left: 0px;
+    }
+    /*Definimos el margen de las etiquetas ul y li*/
+    .footer-link ul li {
+        margin-right: 5px;
+    }
+    /*Aquí le asignamos características a las etiquetas ul, li y a*/
+    .footer-link ul li a {
+        color: #ffffff;
+        text-align: left;
+        display: block;
+        line-height: 32px;
+        position: relative;
+        padding-left: 15px;
+        transition: all .3s ease-in-out;
+        -webkit-transition: all .3s ease-in-out;
+        -moz-transition: all .3s ease-in-out;
+        -o-transition: all .3s ease-in-out;
+        -ms-transition: all .3s ease-in-out;
+    }
+    /*Aquí le asignamos características a las etiquetas a, ul y li, esto se agrega antes*/
+    .footer-link ul li a::before {
+        font-family: FontAwesome;
+        content: "\f105";
+        position: absolute;
+        left: 5px;
+        line-height: 35px;
+        font-size: 16px;
+        transition: all .3s ease-in-out;
+        -webkit-transition: all .3s ease-in-out;
+        -moz-transition: all .3s ease-in-out;
+        -o-transition: all .3s ease-in-out;
+        -ms-transition: all .3s ease-in-out;
+    }
+    /*Declaramos que cuando el mouse este sobre estas etiquetas, se aplicará el cambio*/
+    .footer-link ul li a:hover::before {
+        left: 5px;
+    }
+    /*Declaramos que cuando el mouse este sobre estas etiquetas, cambiará de color*/
+    .footer-link ul li a:hover {
+        color: #b0b435;
+        border-color: #b0b435;
+        padding-left: 20px;
+    }
+    /*Definimos las características que se le aplicarán a la etiqueta h4, dentro de .footer-link-contact*/
+    .footer-link-contact h4 {
+        color: #ffffff;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+        position: relative;
+        font-weight: 700;
+    }
+    /*Definimos las características que se le aplicarán a la etiqueta h4, dentro de .footer-link-contact,
+    esto se aplicará antes*/
+    .footer-link-contact h4::before {
+        border-bottom: 3px solid #b0b435;
+        content: "";
+        height: 3px;
+        width: 100%;
+        position: absolute;
+        bottom: 3px;
+        left: 0px;
+    }
+    /*Definimos el margen que se le aplicará  a las etiquetas ul y li, dentro de .footer-link-contact*/
+    .footer-link-contact ul li {
+        margin-bottom: 12px;
+    }
+    /*Definimos la posición en la que estaránlas etiquetas i, ul y li, dentro de .footer-link-contact*/
+    .footer-link-contact ul li i {
+        position: absolute;
+        left: 0;
+        top: 5px;
+        padding-right: 6px;
+    }
+    /*Definimos el margen y color que se le aplicará a las etiquetas ul, li, y p, dentro de .footer-link-contact*/
+    .footer-link-contact ul li p {
+        padding-left: 25px;
+        color: #cccccc;
+        position: relative;
+    }
+    /*Definimos las características que se aplicarán a las etiquetas ul, li y p, dentro de .footer-link-contact*/
+    .footer-link-contact ul li p {
+        font-size: 16px;
+        color: #cccccc;
+        font-weight: 300;
+        padding-right: 16px;
+        line-height: 24px;
+    }
+    /*Definimos el color que se le aplicará a las etiquetas ul, li, p y a, dentro de .footer-link-contact*/
+    .footer-link-contact ul li p a {
+        color: #cccccc;
+    }
+    /*Definimos el color que se le aplicará a las etiquetas ul, li, p y a,  dentro de .footer-link-contact 
+    cuando el mouse éste sobre ellas*/
+    .footer-link-contact ul li p a:hover {
+        color: #b0b435;
+    }
+    /*------------------------------------------------------------------ Copyright -------------------------------------------------------------------*/
+    /*Al .footer-copyright le asignamos las siguientes características*/
+    .footer-copyright {
+        background: #060606;
+        padding: 20px 0px;
+        position: relative;
+    }
+    /*A la etiqueta p, dentro de .footer-copyright, se le agregan las siguientes características*/
+    .footer-copyright p {
+        text-align: center;
+        color: #ffffff;
+        font-size: 16px;
+    }
+    /*A la etiqueta a, dentro de .footer-copyright, se le agrega el siguiente color*/
+    .footer-copyright p a {
+        color: #ffffff;
+    }
+    /*Definimos que cuando el mouse pase sobre las etiquetas p y a, cambiará de color*/
+    .footer-copyright p a:hover {
+        color: #b0b435;
+    }
+    /*------------------------------------------------------------------ All Pages -------------------------------------------------------------------*/
+    /*Definimos que .all-title-box tendrá la siguiente posición, así como la imagen que le corresponde*/
+    .all-title-box {
+        background: url("../images/all-bg-title.jpg") no-repeat center center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        text-align: center;
+        background-attachment: fixed;
+        padding: 70px 0px;
+        position: relative;
+    }
+    /*Definimos las características que se le aplicarán a la clase, estas van antes*/
+    .all-title-box::before {
+        background: rgba(0, 0, 0, 0.6);
+        content: "";
+        position: absolute;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+    }
+    /*A la etiqueta h2, dentro de .all-title-box, se le agregan las siguientes características*/
+    .all-title-box h2 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #ffffff;
+        float: left;
+        padding: 10px 0px;
+    }
+    /*Definimos que .all-title-box tendrá esos margenes, color de fondo, entre otras características*/
+    .all-title-box .breadcrumb {
+        background: #b0b435;
+        margin: 0px;
+        display: inline-block;
+        border-radius: 0px;
+        float: right;
+    }
+    /*Definimos que la etiqueta li, dentro de .all-title-box y .breadcrum, tendrá esas características*/
+    .all-title-box .breadcrumb li {
+        display: inline-block;
+        color: #000000;
+        font-size: 16px;
+    }
+    /*Agregamos el siguiente color y tamaño de fondo a las etiquetas li y a*/
+    .all-title-box .breadcrumb li a {
+        color: #ffffff;
+        font-size: 16px;
+    }
+    /*Agregamos el color a los elementos mencionados*/
+    .all-title-box .breadcrumb-item+.breadcrumb-item::before {
+        color: #000000;
+    }
+    /*Definimos el tamaño de .about-box-main*/
+    .about-box-main {
+        padding: 70px 0px;
+    }
+    /*Definimos las características de .noo-sh-title*/
+    .noo-sh-title {
+        font-size: 28px;
+        text-transform: uppercase;
+        font-style: normal;
+        font-weight: 700;
+        margin-bottom: 30px;
+    }
+    /*Definimos las características de .noo-sh-title-top*/
+    .noo-sh-title-top {
+        font-size: 28px;
+        text-transform: uppercase;
+        font-style: normal;
+        font-weight: 700;
+        margin-bottom: 0px;
+    }
+    /*Definimos el tamaño de la etiqueta p*/
+    .about-box-main p {
+        padding-bottom: 20px;
+    }
+    /*Definimos el tamaño de margenes y posición de .service-block-inner*/
+    .service-block-inner {
+        padding: 15px 20px;
+        position: relative;
+        margin-bottom: 30px;
+    }
+    /*Agregamos características a la etiqueta a*/
+    .about-box-main a {
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 700;
+        border: none;
+    }
+    /*Definimos el tamaño de .about-box-main y a.btn*/
+    .about-box-main a.btn {
+        padding: 12px 15px;
+    }
+    /*Definimos las características de .service-block-inner::before*/
+    .service-block-inner::before {
+        content: "";
+        width: 100%;
+        height: 5px;
+        border-radius: 0px;
+        background: #000000;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: all 0.5s ease 0s;
+    }
+    /*Definimos las características de .service-block-inner::after*/
+    .service-block-inner::after {
+        content: "";
+        width: 100%;
+        height: 0;
+        border-radius: 0px;
+        background: #b0b435;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        transition: all 0.5s ease 0s;
+    }
+    /*Definimos los tamaños que se aplicarán a la etiqueta h3 dentro de .service-block-inner*/
+    .service-block-inner h3 {
+        font-size: 24px;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+    /*Definimos los tamaños y margenes que se aplicarán a la etiqueta p dentro de .service-block-inner*/
+    .service-block-inner p {
+        margin: 0px;
+        font-size: 16px;
+        font-weight: 300;
+        padding-bottom: 0px;
+    }
+    /*Declaramos que al colocar el mouse sobre .service-block-inner::after, se aplicará el cambio*/
+    .service-block-inner:hover::after {
+        height: 100%;
+    }
+    /*Declaramos que al colocar el mouse sobre la etiqueta h3 dentro de .service-block-inner:hover, 
+    se aplicará el cambio de color y se generará una transición*/
+    .service-block-inner:hover h3 {
+        color: #ffffff;
+        transition: all 0.5s ease 0s;
+    }
+    /*Declaramos que al colocar el mouse sobre la etiqueta p dentro de .service-block-inner:hover, 
+    se aplicará el cambio de color y se generará una transición*/    
+    .service-block-inner:hover p {
+        color: #ffffff;
+        transition: all 0.5s ease 0s;
+    }
+    /*Aquí definimos el movimiento que dará .out-team*/
+    .our-team {
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        position: relative;
+        transition: all 0.3s ease 0s;
+    }
+    /*Cuando se pase el mouse sobre esta clase, se aplicarán los cambios*/
+    .our-team:hover {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+    /*Características que se le aplicarán a la imagen mencionada*/
+    .our-team img {
+        width: 100%;
+        height: auto;
+        transition: all 0.3s ease-in-out 0s;
+    }
+    /*Características que se le aplicarán a la imagen mencionada cuando el mouse pase sobre ella*/
+    .our-team:hover img {
+        opacity: 0.5;
+    }
+    /*Características que se le aplicarán a la imagen mencionada*/
+    .our-team .team-content {
+        color: #000;
+        opacity: 1;
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        background: #ffffff;
+        padding-left: 55px;
+        width: 100%;
+        transition: all 0.3s ease 0s;
+    }
+    /*Características que se le aplicarán al título*/
+    .our-team .title {
+        display: block;
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0 0 7px 0;
+    }
+    /*Definimos el tamaño del fondo y que será en un block, la clase .post*/
+    .our-team .post {
+        display: block;
+        font-size: 15px;
+    }
+    /*Definimos las características de .our-team .social*/
+    .our-team .social {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 35px;
+        text-align: center;
+        opacity: 0;
+        position: absolute;
+        bottom: 35px;
+        right: 0px;
+        transition: all 0.3s ease 0s;
+    }
+    /*Declaramos la opacidad que se le dará cuando el mouse pase sobre .social*/
+    .our-team:hover .social {
+        opacity: 1;
+    }
+    /*Declaramos que la etiqueta li será un block*/
+    .our-team .social li {
+        display: block;
+    }
+    /*Declaramos las características de las etiquetas li y a, dentro de .our-team*/
+    .our-team .social li a {
+        display: inline-block;
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        background: #000000;
+        font-size: 17px;
+        color: #fff;
+        opacity: 0.9;
+        position: relative;
+        transform: translate(35px, -35px);
+        transition: all 0.3s ease-in-out 0s
+    }
+    /*Declaramos que cuando el mouse este sobre las etiquetas li y a, se aplicarán estos cambios*/
+    .our-team .social li a:hover {
+        width: 35px;
+        background: #b0b435;
+        transition-delay: 0s;
+    }
+    /*Declaramos las características que se le aplicarán al .icon*/
+    .our-team .icon {
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        background: #b0b435;
+        text-align: center;
+        color: #fff;
+        position: absolute;
+        bottom: 0;
+    }
+    /*Declaramos el tamaño que abarcará la descripción*/
+    .team-description {
+        padding: 20px 0px;
+    }
+    /*Declaramos el margen y tamaños de la etiqueta p*/
+    .team-description p {
+        font-size: 14px;
+        margin: 0px;
+    }
+    /*Declaramos la opacidad que se aplicará cuando pase el mouse a .hover-team:hover*/
+    .hover-team:hover .social {
+        opacity: 1;
+    }
+    /*Declaramos la transición que se aplicará cuando pase el mouse a .hover-team:hover*/
+    .hover-team:hover .social li:nth-child(1) a {
+        transition-delay: 0.3s;
+    }
+    /*Declaramos la transición que se aplicará cuando pase el mouse a .hover-team:hover*/
+    .hover-team:hover .social li:nth-child(2) a {
+        transition-delay: 0.2s;
+    }
+    /*Declaramos la transición que se aplicará cuando pase el mouse a .hover-team:hover*/
+    .hover-team:hover .social li:nth-child(3) a {
+        transition-delay: 0.1s;
+    }
+    /*Declaramos la transición que se aplicará cuando pase el mouse a .hover-team:hover*/
+    .hover-team:hover .social li:nth-child(4) a {
+        transition-delay: 0.0s;
+    }
+    /*Declaramos la transición que se aplicará cuando pase el mouse a .hover-team:hover*/
+    .hover-team:hover .social li a {
+        transform: translate(0, 0)
+    }
+    /*Declaramos la opacidad que se aplicará cuando pase el mouse a .hover-team:hover*/
+    .hover-team:hover img {
+        opacity: 0.5;
+    }
+    /*Declaramos el color del borde del botón*/
+    .hover-team .team-content .title {
+        border-bottom: 2px solid #b0b435;
+    }
+    /*Declaramos el tamaño de .shop-box-inner*/
+    .shop-box-inner {
+        padding: 70px 0px;
+    }
+    /*Declaramos la posición de .search-product*/
+    .search-product {
+        position: relative;
+    }
+    /*Declaramos las características que se aplicarán al buscar un producto*/
+    .search-product input[type="text"] {
+        background: #333333;
+        border: 0;
+        box-shadow: none;
+        border-radius: 0;
+        color: #ffffff;
+        height: 55px;
+        font-weight: 300;
+        font-size: 16px;
+        margin-bottom: 15px;
+        padding: 0 20px;
+        -webkit-transition: all .5s ease;
+        -moz-transition: all .5s ease;
+        transition: all .5s ease;
+        width: 100%;
+        outline: 0;
+    }
+    /*Declaramos el cambio de opacidad y color al buscar un producto*/
+    .search-product .form-control::-moz-placeholder {
+        color: #ffffff;
+        opacity: 1;
+    }
+    /*Declaramos las características del botón para buscar un producto*/
+    .search-product button {
+        background: #000000;
+        color: #ffffff;
+        font-size: 18px;
+        position: absolute;
+        right: 0px;
+        padding: 12px 15px;
+        top: 0;
+        line-height: 27px;
+        border: none;
+        cursor: pointer;
+        height: 100%;
+    }
+    /*Declaramos el cambio de color que se le aplicará al botón cuando el mouse este sobre el*/
+    .search-product button:hover {
+        background: #b0b435;
+    }
+    /*Declaramos el margen de la opción de filtrar*/
+    .filter-sidebar-left {
+        margin-bottom: 20px;
+    }
+    /*Declaramos las características de .title-left*/
+    .title-left {
+        font-size: 16px;
+        border-bottom: 3px solid #000000;
+        margin-bottom: 20px;
+    }
+    /*Declaramos el tamaño de la etiqueta h3 dentro de .title-left*/
+    .title-left h3 {
+        font-weight: 700;
+    }
+    /*Declaramos las características de .list-group-item*/
+    .list-group-item {
+        border: none;
+        padding: 5px 20px;
+        font-size: 14px;
+    }
+    /*Declaramos el tamaño de .text-muted*/
+    .text-muted {
+        padding: 10px 0px;
+    }
+    /*Declaramos las cacterísticas de .list-group-item[data-toggle="collapse"]::after, 
+    estos cambios se aplican después*/
+    .list-group-item[data-toggle="collapse"]::after {
+        width: 0;
+        height: 0;
+        position: absolute;
+        top: calc(50% - 12px);
+        right: 10px;
+        content: '';
+        -webkit-transition: top .2s, -webkit-transform .2s;
+        transition: top .2s, -webkit-transform .2s;
+        transition: transform .2s, top .2s;
+        transition: transform .2s, top .2s, -webkit-transform .2s;
+        font-family: FontAwesome;
+        content: "\f105";
+    }
+    /*Declaramos el margen y borde de las clases mencionadas*/
+    .list-group-tree .list-group-collapse .list-group {
+        margin-left: 25px;
+        border-left: 1px solid #ced4da;
+    }
+    /*Declaramos las características de las clases mencionadas*/
+    .list-group-tree .list-group-item.active {
+        color: #b0b435;
+        background-color: #fff;
+        font-weight: 700;
+    }
+    /*Declaramos las características de .list-group-item::before*/
+    .list-group-tree .list-group-collapse .list-group>.list-group-item::before {
+        position: absolute;
+        top: 14px;
+        left: 0;
+        content: '';
+        width: 8px;
+        height: 1px;
+        background-color: #ced4da;
+    }
+    /*Declaramos algunas características que se aplicarán cuando el mouse este sobre esta clase*/
+    .list-group-tree .list-group-item:hover {
+        color: #b0b435;
+        background-color: #fff;
+        outline: 0;
+        font-weight: 700;
+    }
+    /*Declaramos el margen que se le aplicará a .filter-price-left*/
+    .filter-price-left {
+        margin-bottom: 20px;
+    }
+    /*Declaramos las características de .ui-slider-handle*/
+    #slider-range .ui-slider-handle {
+        background-color: #b0b435;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        cursor: pointer;
+        height: 21px;
+        top: -6px;
+        transition: none 0s ease 0s;
+        width: 21px;
+        box-shadow: 0px 0px 6.65px 0.35px rgba(0, 0, 0, 0.15);
+    }
+    /*Declaramos dos características de .ui-slider-range*/
+    #slider-range .ui-slider-range {
+        background-color: #b0b435;
+        border-radius: 0;
+    }
+    /*Declaramos características de #slider-range*/
+    #slider-range {
+        background: #000000;
+        border: medium none;
+        border-radius: 50px;
+        float: left;
+        height: 10px;
+        margin-top: 14px;
+        width: 100%;
+    }
+    /*Agregamos el diseño de las funciones de .price-box-slider*/
+    .price-box-slider p {
+        clear: both;
+        margin-top: 20px;
+        display: inline-block;
+        width: 100%;
+    }
+    /*Declaramos el margen de la etiqueta p*/
+    .price-box-slider p input {
+        margin-top: 5px;
+    }
+    /*Declaramos características de la etiqueta p*/
+    .price-box-slider p button {
+        border: none;
+        color: #ffffff;
+        float: right;
+    }
+    /*Declaramos características de .brand-box*/
+    .brand-box {
+        display: inline-block;
+        width: 100%;
+        height: 259px;
+        position: relative;
+    }
+    /*Declaramos características de .product-item-filter*/
+    .product-item-filter {
+        border-bottom: 1px solid #000000;
+        border-top: 1px solid #000000;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+        padding: 5px 0;
+    }
+    /*Declaramos una característica de .nice-select.wide*/
+    .nice-select.wide {
+        width: 75%;
+    }
+    /*Declaramos características de la etiqueta span*/
+    .product-item-filter .toolbar-sorter-right span {
+        line-height: 42px;
+        padding-right: 15px;
+        float: left;
+    }
+    /*Declaramos características de .toolbar-sorter-right*/
+    .product-item-filter .toolbar-sorter-right {
+        width: 65%;
+    }
+    /*Declaramos que la .toolbar-sorter-right va a la izquierda*/
+    .toolbar-sorter-right {
+        float: left;
+    }
+    /*Declaramos que la .toolbar-sorter-right va a la derecha*/
+    .toolbar-sorter-right .bootstrap-select.form-control:not([class*="col-"]) {
+        width: 77%;
+        float: right;
+    }
+    /*Declaramos características de .bootstrap-select.btn-group*/
+    .toolbar-sorter-right .bootstrap-select.btn-group>.dropdown-toggle {
+        padding: 0px;
+        border-radius: 0px;
+        border: none;
+    }
+    /*Declaramos una característica de la toolbar*/
+    .toolbar-sorter-right .bootstrap-select.btn-group .dropdown-toggle .filter-option {
+        padding-left: 15px;
+    }
+    /*Declaramos el color que tomará .btn-light*/
+    .toolbar-sorter-right .btn-light {
+        background: #000000;
+        color: #ffffff;
+    }
+    /*Declaramos el color que tomará .btn-light:hover al pasar el mouse sobre ella*/
+    .toolbar-sorter-right .btn-light:hover {
+        background: #b0b435;
+        border-radius: 0px;
+        border: none;
+    }
+    /*Declaramos el color del fondo de .btn-light.dropdown-toggle*/
+    .toolbar-sorter-right .show>.btn-light.dropdown-toggle {
+        background-color: #b0b435;
+    }
+    /*Declaramos el color de las clases mencionadas */
+    .toolbar-sorter-right .bootstrap-select .dropdown-toggle:focus {
+        background: #b0b435;
+    }
+    /*Declaramos la posición y tamaño de las clases mencionadas*/
+    .toolbar-sorter-right .dropup .dropdown-toggle::after {
+        position: absolute;
+        right: 15px;
+        top: 18px;
+    }
+   /*Termina el código comentado por: Meza Moreno Alejandra*/
+    .product-item-filter {
+        border-bottom: 1px solid #000000;
+        border-top: 1px solid #000000;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+        padding: 5px 0;
+    }
+    
+    .nice-select.wide {
+        width: 75%;
+    }
+    
+    .product-item-filter .toolbar-sorter-right span {
+        line-height: 42px;
+        padding-right: 15px;
+        float: left;
+    }
+    
+    .product-item-filter .toolbar-sorter-right {
+        width: 65%;
+    }
+    
+    .toolbar-sorter-right {
+        float: left;
+    }
+    
+    .toolbar-sorter-right .bootstrap-select.form-control:not([class*="col-"]) {
+        width: 77%;
+        float: right;
+    }
+    
+    .toolbar-sorter-right .bootstrap-select.btn-group>.dropdown-toggle {
+        padding: 0px;
+        border-radius: 0px;
+        border: none;
+    }
+    
+    .toolbar-sorter-right .bootstrap-select.btn-group .dropdown-toggle .filter-option {
+        padding-left: 15px;
+    }
+    
+    .toolbar-sorter-right .btn-light {
+        background: #000000;
+        color: #ffffff;
+    }
+    
+    .toolbar-sorter-right .btn-light:hover {
+        background: #b0b435;
+        border-radius: 0px;
+        border: none;
+    }
+    
+    .toolbar-sorter-right .show>.btn-light.dropdown-toggle {
+        background-color: #b0b435;
+    }
+    
+    .toolbar-sorter-right .bootstrap-select .dropdown-toggle:focus {
+        background: #b0b435;
+    }
+    
+    .toolbar-sorter-right .dropup .dropdown-toggle::after {
+        position: absolute;
+        right: 15px;
+        top: 18px;
+    }
+    
+    .product-item-filter p {
+        float: right;
+        line-height: 42px;
+    }
+    
+    .product-item-filter .nav-tabs {
+        border: none;
+        float: right;
+    }
+    
+    .nav>li {
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    
+    .product-item-filter li .nav-link {
+        border: none;
+        border-radius: 0px;
+        color: #111111;
+        font-size: 18px;
+        padding: 4px 12px;
+    }
+    
+    .product-item-filter li .nav-link.active {
+        background: #b0b435;
+        border: none;
+        color: #ffffff;
+    }
+    
+    .product-item-filter li .nav-link:hover {
+        background: #000000;
+        border: none;
+        color: #ffffff;
+    }
+    
+    .product-categori {
+        margin-bottom: 30px;
+    }
+    
+    .product-categorie-box {
+        margin-top: 20px;
+    }
+    
+    .tab-content,
+    .tab-pane {
+        width: 100%;
+    }
+    
+    .why-text.full-width h4 {
+        font-size: 24px;
+        font-weight: 700;
+        padding-bottom: 15px;
+    }
+    
+    .why-text.full-width h5 del {
+        font-size: 13px;
+        color: #666;
+    }
+    
+    .why-text.full-width h5 {
+        color: #000000;
+        font-weight: 700;
+    }
+    
+    .why-text.full-width p {
+        padding-bottom: 20px;
+    }
+    
+    .why-text.full-width a {
+        padding: 10px 20px;
+        font-weight: 700;
+        color: #ffffff;
+        border: none;
+    }
+    
+    .list-view-box {
+        margin-bottom: 30px;
+    }
+    
+    .list-view-box:hover .mask-icon {
+        -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=100)";
+        filter: alpha(opacity=100);
+        opacity: 1;
+        top: 0px;
+        -webkit-transition-delay: 0s;
+        -moz-transition-delay: 0s;
+        -o-transition-delay: 0s;
+        -ms-transition-delay: 0s;
+        transition-delay: 0s;
+        -webkit-animation: bounceY 0.9s linear;
+        -moz-animation: bounceY 0.9s linear;
+        -ms-animation: bounceY 0.9s linear;
+        animation: bounceY 0.9s linear;
+    }
+    
+    .cart-box-main {
+        padding: 70px 0px;
+    }
+    
+    .table-main table thead {
+        background: #b0b435;
+        color: #ffffff;
+    }
+    
+    .table-main .table thead th {
+        font-size: 18px;
+    }
+    
+    .table-main table td.thumbnail-img {
+        width: 120px;
+    }
+    
+    .table-main table td {
+        vertical-align: middle;
+        font-size: 16px;
+    }
+    
+    .quantity-box input {
+        width: 60px;
+        border: 2px solid #000000;
+        text-align: center;
+    }
+    
+    .quantity-box input:focus {
+        border-color: #b0b435;
+    }
+    
+    .name-pr a {
+        font-weight: 700;
+        font-size: 18px;
+        color: #000000;
+    }
+    
+    .remove-pr {
+        text-align: center;
+    }
+    
+    .coupon-box .input-group .form-control {
+        min-height: 50px;
+        border-radius: 0px;
+        font-weight: 400;
+        border: 1px solid #e8e8e8;
+        box-shadow: none !important;
+    }
+    
+    .coupon-box .input-group .form-control::-moz-placeholder {
+        color: #000000;
+    }
+    
+    .coupon-box .input-group .input-group-append .btn-theme {
+        background: #000000;
+        color: #ffffff;
+        border: none;
+        border-radius: 0px;
+        font-size: 16px;
+        padding: 0px 20px;
+    }
+    
+    .coupon-box .input-group .input-group-append .btn-theme:hover {
+        background: #b0b435;
+    }
+    
+    .update-box input[type="submit"] {
+        background: #000000;
+        border: medium none;
+        border-radius: 0;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        color: #fff;
+        display: inline-block;
+        float: right;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        height: 50px;
+        line-height: 40px;
+        margin-right: 15px;
+        padding: 0 20px;
+        text-shadow: none;
+        text-transform: uppercase;
+        -webkit-transition: all 0.3s ease 0s;
+        transition: all 0.3s ease 0s;
+        white-space: nowrap;
+        width: inherit;
+    }
+    
+    .update-box input[type="submit"]:hover {
+        background: #b0b435;
+    }
+    
+    .order-box h3 {
+        font-size: 16px;
+        color: #222222;
+        font-weight: 700;
+    }
+    
+    .order-box h4 {
+        font-size: 16px;
+        padding: 0px;
+        line-height: 35px !important;
+    }
+    
+    .order-box .font-weight-bold {
+        font-size: 18px;
+    }
+    
+    .gr-total h5 {
+        font-weight: 700;
+        color: #b0b435;
+        font-size: 18px;
+        margin: 0px;
+        padding: 0px;
+        line-height: 35px !important;
+    }
+    
+    .gr-total .h5 {
+        margin: 0px;
+        font-weight: 700;
+        line-height: 35px;
+    }
+    
+    .my-account-box-main {
+        padding: 70px 0px;
+    }
+    
+    .shopping-box a {
+        font-size: 18px;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+    }
+    
+    .payment-icon {
+        display: inline-block;
+        padding: 10px 0px;
+    }
+    
+    .payment-icon ul li {
+        width: 20%;
+        float: left;
+    }
+    
+    .needs-validation label {
+        font-size: 16px;
+        margin-bottom: 0px;
+        line-height: 24px;
+    }
+    
+    .needs-validation .form-control {
+        min-height: 40px;
+        border-radius: 0px;
+        border: 1px solid #e8e8e8;
+        box-shadow: none !important;
+        font-size: 14px;
+    }
+    
+    .needs-validation .form-control:focus {
+        border: 1px solid #b0b435 !important;
+    }
+    
+    .review-form-box .form-control {
+        min-height: 40px;
+        border-radius: 0px;
+        border: 1px solid #e8e8e8;
+        box-shadow: none !important;
+        font-size: 14px;
+    }
+    
+    .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+        background-color: #b0b435;
+        box-shadow: none;
+    }
+    
+    .custom-radio .custom-control-input:checked~.custom-control-label::before {
+        background-color: #b0b435;
+        box-shadow: none;
+    }
+    
+    .new-account-login h5 {
+        font-size: 18px;
+        color: #111111;
+        font-weight: 600;
+    }
+    
+    .new-account-login h5 a:hover {
+        color: #b0b435;
+    }
+    
+    .review-form-box button {
+        padding: 10px 20px;
+        color: #ffffff;
+        font-size: 18px;
+        border: none;
+    }
+    
+    .wide.w-100 {
+        min-height: 40px;
+        border: 1px solid #e8e8e8;
+    }
+    
+    .wide.w-100 option {
+        min-height: 40px;
+    }
+    
+    .custom-control-input:focus~.custom-control-label::before {
+        box-shadow: none;
+    }
+    
+    .odr-box a {
+        font-size: 18px;
+        color: #111111;
+        font-weight: 700;
+    }
+    
+    .account-box {
+        text-align: center;
+        background: #ffffff;
+        padding: 30px;
+        border: 1px solid #000000;
+    }
+    
+    .bottom-box {
+        border-top: 1px solid #eee;
+        margin-bottom: 30px;
+        margin-top: 30px;
+        padding-top: 15px;
+    }
+    
+    .bottom-box .account-box {
+        min-height: 205px;
+    }
+    
+    .account-box {
+        border: 2px solid #000000;
+        margin-top: 15px;
+    }
+    
+    .my-account-page a {
+        color: #000000;
+    }
+    
+    .my-account-page a:hover {
+        color: #b0b435;
+    }
+    
+    .service-icon i {
+        font-size: 34px;
+    }
+    
+    .service-desc p {
+        font-size: 16px;
+    }
+    
+    .service-desc h4 {
+        text-decoration: underline;
+        font-size: 18px;
+        font-weight: 700;
+    }
+    
+    .service-icon a {
+        background: rgba(0, 0, 0, 0.9);
+        -webkit-transition: -webkit-transform ease-out 0.1s, background 0.2s;
+        -moz-transition: -moz-transform ease-out 0.1s, background 0.2s;
+        transition: transform ease-out 0.1s, background 0.2s;
+    }
+    
+    .service-icon a {
+        display: inline-block;
+        font-size: 0px;
+        cursor: pointer;
+        margin: 15px 0px;
+        width: 90px;
+        height: 90px;
+        line-height: 110px;
+        border-radius: 50%;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+        color: #ffffff;
+    }
+    
+    .service-icon a::after {
+        pointer-events: none;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        content: '';
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
+        content: "";
+        top: 0;
+        left: 0;
+        padding: 0;
+        z-index: -1;
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+        opacity: 0;
+        -webkit-transform: scale(0.9);
+        -moz-transform: scale(0.9);
+        -ms-transform: scale(0.9);
+        transform: scale(0.9);
+    }
+    
+    .service-icon a:hover::after {
+        -webkit-animation: sonarEffect 1.3s ease-out 75ms;
+        -moz-animation: sonarEffect 1.3s ease-out 75ms;
+        animation: sonarEffect 1.3s ease-out 75ms;
+    }
+    
+    .service-icon a:hover {
+        background: rgba(251, 183, 20, 1);
+        -webkit-transform: scale(0.93);
+        -moz-transform: scale(0.93);
+        -ms-transform: scale(0.93);
+        transform: scale(0.93);
+        color: #fff;
+    }
+    
+    @-webkit-keyframes sonarEffect {
+        0% {
+            opacity: 0.3;
+        }
+        40% {
+            opacity: 0.5;
+            box-shadow: 0 0 0 2px rgba(0, 53, 68, 0.1), 0 0 10px 10px #b0b435, 0 0 0 10px rgba(0, 53, 68, 0.5);
+        }
+        100% {
+            box-shadow: 0 0 0 2px rgba(0, 53, 68, 0.1), 0 0 10px 10px #b0b435, 0 0 0 10px rgba(0, 53, 68, 0.5);
+            -webkit-transform: scale(1.5);
+            opacity: 0;
+        }
+    }
+    
+    @-moz-keyframes sonarEffect {
+        0% {
+            opacity: 0.3;
+        }
+        40% {
+            opacity: 0.5;
+            box-shadow: 0 0 0 2px rgba(0, 53, 68, 0.1), 0 0 10px 10px #b0b435, 0 0 0 10px rgba(0, 53, 68, 0.5);
+        }
+        100% {
+            box-shadow: 0 0 0 2px rgba(0, 53, 68, 0.1), 0 0 10px 10px #b0b435, 0 0 0 10px rgba(0, 53, 68, 0.5);
+            -moz-transform: scale(1.5);
+            opacity: 0;
+        }
+    }
+    
+    @keyframes sonarEffect {
+        0% {
+            opacity: 0.3;
+        }
+        40% {
+            opacity: 0.5;
+            box-shadow: 0 0 0 2px rgba(0, 53, 68, 0.1), 0 0 10px 10px #b0b435, 0 0 0 10px rgba(0, 53, 68, 0.5);
+        }
+        100% {
+            box-shadow: 0 0 0 2px rgba(0, 53, 68, 0.1), 0 0 10px 10px #3851bc, 0 0 0 10px rgba(0, 53, 68, 0.5);
+            transform: scale(1.5);
+            opacity: 0;
+        }
+    }
+    
+    .add-pr a {
+        padding: 10px 20px;
+        font-weight: 700;
+        color: #ffffff;
+        border: none;
+    }
+    
+    .wishlist-box-main {
+        padding: 70px 0px;
+    }
+    
+    .services-box-main {
+        padding: 70px 0px;
+    }
+    
+    .contact-box-main {
+        padding: 70px 0px;
+    }
+    
+    .contact-info-left {
+        padding: 20px;
+        background: url(../images/contact-bg.jpg) no-repeat center;
+        background-size: cover;
+    }
+    
+    .contact-info-left h2 {
+        font-size: 22px;
+        font-weight: 700;
+    }
+    
+    .contact-info-left p {
+        margin-bottom: 15px;
+    }
+    
+    .contact-info-left ul li {
+        margin-bottom: 12px;
+    }
+    
+    .contact-info-left ul li p {
+        font-size: 16px;
+        color: #222222;
+        font-weight: 300;
+        padding-right: 16px;
+        padding-left: 25px;
+        line-height: 24px;
+        position: relative;
+    }
+    
+    .contact-info-left ul li p i {
+        position: absolute;
+        left: 0;
+        top: 5px;
+        padding-right: 6px;
+        color: #b0b435;
+    }
+    
+    .contact-info-left ul li p a:hover {
+        color: #b0b435;
+    }
+    
+    .contact-form-right {
+        padding: 20px;
+    }
+    
+    .contact-form-right h2 {
+        font-size: 24px;
+        font-weight: 700;
+    }
+    
+    .contact-form-right p {
+        margin-bottom: 15px;
+    }
+    
+    .contact-form-right .form-group .form-control::-moz-placeholder {
+        color: #999999;
+    }
+    
+    .contact-form-right .form-group .form-control {
+        border-radius: 0px;
+        min-height: 40px;
+    }
+    
+    .contact-form-right .form-group {
+        margin-bottom: 30px;
+        position: relative;
+    }
+    
+    .contact-form-right .form-group .form-control:focus {
+        border: 1px solid #b0b435;
+        box-shadow: none;
+    }
+    
+    .submit-button button {
+        padding: 10px 20px;
+        font-weight: 700;
+        color: #ffffff;
+        border: none;
+    }
+    
+    .help-block.with-errors {
+        position: absolute;
+        right: 0;
+        background: red;
+        color: #fff;
+        padding: 0px 15px;
+    }
+    
+    .help-block ul li {
+        color: #fff;
+    }
+    
+    .shop-detail-box-main {
+        padding: 70px 0px;
+    }
+    
+    .single-product-slider .carousel-control-prev {
+        bottom: auto;
+        background: #111111;
+        width: 6%;
+        padding: 10px 0;
+        background-image: none;
+        top: 40%;
+    }
+    
+    .single-product-slider .carousel-control-next {
+        bottom: auto;
+        background: #111111;
+        width: 6%;
+        padding: 10px 0;
+        background-image: none;
+        top: 40%;
+    }
+    
+    .single-product-slider .carousel-indicators li img {
+        opacity: 0.5;
+    }
+    
+    .single-product-slider .carousel-indicators li.active img {
+        opacity: 1;
+    }
+    
+    .carousel-indicators {
+        position: relative;
+        bottom: 0;
+        background: #000000;
+    }
+    
+    .carousel-indicators li {
+        width: 30%;
+        height: 100%;
+        cursor: pointer;
+    }
+    
+    .single-product-details h2 {
+        color: #000000;
+        font-weight: 700;
+        font-size: 24px;
+    }
+    
+    .single-product-details h5 {
+        color: #b0b435;
+        font-weight: 700;
+        font-size: 18px;
+    }
+    
+    .single-product-details h5 del {
+        font-size: 13px;
+        color: #666;
+    }
+    
+    .available-stock span {
+        font-size: 15px;
+    }
+    
+    .available-stock span a {
+        color: #b0b435;
+    }
+    
+    .single-product-details h4 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-top: 20px;
+    }
+    
+    .single-product-details p {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+    
+    .single-product-details ul {
+        display: inline-block;
+        width: 100%;
+        border: 1px #000000 dashed;
+        margin-bottom: 30px;
+    }
+    
+    .single-product-details ul li {
+        width: 50%;
+        float: left;
+        padding: 0px 15px;
+    }
+    
+    .size-st .bootstrap-select>.dropdown-toggle.btn-light {
+        background: #000000;
+        border: none;
+        border-radius: 0px;
+        color: #ffffff;
+    }
+    
+    .quantity-box input {
+        width: 100%;
+    }
+    
+    .price-box-bar {
+        margin-bottom: 30px;
+    }
+    
+    .price-box-bar a {
+        padding: 10px 20px;
+        font-weight: 700;
+        color: #ffffff;
+        border: none;
+    }
+    
+    .add-to-btn .add-comp {
+        float: left;
+    }
+    
+    .add-to-btn .share-bar {
+        float: right;
+    }
+    
+    .add-comp a {
+        padding: 10px 20px;
+        font-weight: 700;
+        color: #ffffff;
+        border: none;
+    }
+    
+    .share-bar a {
+        background: #b0b435;
+        color: #ffffff;
+        padding: 5px 10px;
+        display: inline-block;
+        width: 34px;
+        text-align: center;
+    }
+    
+    .featured-products-box .owl-nav {
+        position: absolute;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        bottom: -20px;
+        text-align: center;
+    }
+    
+    .featured-products-box .owl-nav button.owl-prev {
+        background: #000000;
+        color: #ffffff;
+        width: 38px;
+        height: 38px;
+        text-align: center;
+    }
+    
+    .featured-products-box .owl-nav button.owl-next {
+        background: #000000;
+        color: #ffffff;
+        width: 38px;
+        height: 38px;
+        text-align: center;
+    }
+    
+    .featured-products-box .owl-nav button.owl-prev:hover,
+    .featured-products-box .owl-nav button.owl-next:hover {
+        background: #b0b435;
+    }
+    
+    .table-responsive .table td,
+    .table-responsive .table th {
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+    
+    .card-outline-secondary .card-body a {
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 700;
+        padding: 12px 25px;
+        border: none;
+    }
+    /* ------------------------- */
+    /* Mediaqueies */
+    /* ------------------------- */
+    
+    @media screen and (max-width: 1000px) {
+        .menu .contenedor-enlaces-nav {
+            padding: 0 10px;
+        }
+        .menu .contenedor {
+            width: 100%;
+        }
+    }
+    
+    @media screen and (max-width: 800px) {
+        .menu .contenedor {
+            width: 90%;
+        }
+        .menu .contenedor-botones-menu {
+            display: flex;
+        }
+        .menu .contenedor-enlaces-nav {
+            padding: 20px;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            position: fixed;
+            left: 0;
+            background: #232F3F;
+            height: 100vh;
+            width: 80%;
+            z-index: 2000;
+            transition: .3s ease all;
+            transform: translate(-100%);
+        }
+        .menu .contenedor-enlaces-nav.activo {
+            transform: translate(0%);
+        }
+        .menu .btn-departamentos {
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        .menu .btn-departamentos i {
+            position: static;
+            margin-left: 20px;
+            transform: rotate(-90deg);
+        }
+        .menu .enlaces {
+            width: 100%;
+        }
+        .menu .enlaces a {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+        }
+        .grid {
+            display: grid;
+            transition: .3s ease all;
+            transform: translateX(-100%);
+            z-index: 3000;
+            width: 80%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            grid-template-areas: "categorias categorias categorias categorias";
+        }
+        .grid.activo {
+            transform: translateX(0%);
+        }
+        .grid::before {
+            display: none;
+        }
+        .grid .btn-regresar {
+            display: inline-block;
+        }
+        .grid .categorias .subtitulo {
+            display: block;
+        }
+        .grid .contenedor-subcategorias {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            transition: .3s ease all;
+            transform: translateX(-100%);
+            overflow: auto;
+        }
+        .grid .contenedor-subcategorias.activo {
+            transform: translateX(0%);
+        }
+        .grid .contenedor-subcategorias .subcategoria {
+            grid-template-columns: 1fr;
+        }
+        .grid .contenedor-subcategorias .banner-subcategoria {
+            width: 100%;
+            min-height: 250px;
+            max-height: 350px;
+        }
+        .grid .enlaces-subcategoria {
+            min-height: 50vh;
+            overflow: auto;
+        }
+        .grid .contenedor-subcategorias .galeria-subcategoria a {
+            width: 25%;
+            height: 100%;
+        }
+    }
+
+    /*SAMANTHA*/
+    .Sami{
+        margin: 15px 8vh;
+        padding: 10px;
+        padding-left: 10px;
+        background: white;
+        
+    }
+    .Sami table td{
+        position: center;
+        padding: 0px 0px 20px 25vh;
+        width: 70vh;
+    }
+    .registrar{
+        margin: 3px;
+        padding: 10px 10px 10px 10px;
+        background: #000000;
+        color: white;
+        font-family: "times new roman";
+        font-size: 12pt;
+        cursor: pointer;
+    }
+    .registrar:hover{
+        margin: 3px;
+        padding: 15px 15px 15px 15px;
+        background: rgba(165, 39, 39, 0.925);
+        color: black;
+        font-family: garamond;
+        font-size: 12pt;
+        border-radius: 5px;
+    }
+    .ingresar:hover{
+        margin: 3px;
+        padding: 15px 15px 15px 15px;
+        background:rgba(165, 39, 39, 0.925);
+        color: black;
+        font-family: garamond;
+        font-size: 12pt;
+        border-radius: 5px;
+    }
+    .redondeado {
+        border-radius:5px
+    }
+    input{
+        padding:10px;
+        margin:9px;
+    }
+
+        /*Comienza el código comentado por: Diego Sánchez Luna*/
+    /*Atributos generales que son aplicados a toda la página en general, independientemente de su clase,
+puede ser posterioromente editado en cada una*/
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    /*Se edita el body para que contenga una fuente base además de una tonalidad un poco más oscura,
+ haciendo de la página web algo más agradable a la vist*/
+    
+    body {
+        background: #EAEDED;
+        font-family: Arial, sans-serif;
+    }
+    /*Se le quita el subrayado a los hipervinculos*/
+    
+    a {
+        text-decoration: none;
+    }
+    /*Creamos una caja que contenga básicamente todo el contenido de la página web y que así sea
+ más sencillo acomodar toda la información*/
+    
+    .contenedor {
+        margin: auto;
+        width: 90%;
+        max-width: 1400px;
+    }
+    /*Se crea una especie de página blanca para resaltar toda la información*/
+    
+    main article {
+        background: #fff;
+        margin: 20px 0;
+        padding: 20px;
+        height: 1000px;
+    }
+    /* ------------------------- 
+        Enlaces del navbar  
+    ------------------------- */
+    /*Crea una base para el menú desplegable*/
+    
+    .menu {
+        background: #232F3E;
+        padding: 5px 0;
+        margin-bottom: 20px;
+    }
+    /*Contiene los botones del menú desplegable*/
+    
+    .menu .contenedor-botones-menu {
+        /* display: flex; */
+        display: none;
+        justify-content: space-between;
+    }
+    /*Crea los botones*/
+    
+    .menu .contenedor-botones-menu button {
+        font-size: 20px;
+        color: #fff;
+        padding: 10px 20px;
+        border: 1px solid transparent;
+        display: inline-block;
+        cursor: pointer;
+        background: none;
+    }
+    /*Añadimos el efecto del botón cuando colocamos el cursor encima del enlace*/
+    
+    .menu .contenedor-botones-menu button:hover {
+        border: 1px solid rgba(255, 255, 255, .4);
+    }
+    /*Hacemos desaparecer el botón de cerrar menú hasta que sea necesario*/
+    
+    .menu .contenedor-botones-menu .btn-menu-cerrar {
+        display: none;
+    }
+    /*Alínea el botón y lo hace visible*/
+    
+    .menu .contenedor-botones-menu .btn-menu-cerrar.activo {
+        display: inline-block;
+    }
+    /*Alineamos los enlaces de la barra de navegación*/
+    
+    .menu .contenedor-enlaces-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    /*Crea el bloque en el ue colocamos las categorías*/
+    
+    .menu .btn-departamentos {
+        color: #fff;
+        padding: 7px;
+        border-radius: 3px;
+        display: flex;
+        align-items: flex-end;
+        border: 1px solid transparent;
+        font-size: 12px;
+        cursor: default;
+    }
+    /*Cambia los márgenes de la letra itálica dentro de los departamentos*/
+    
+    .menu .btn-departamentos i {
+        margin-left: 20px;
+        position: relative;
+        bottom: 3px;
+    }
+    /*Hace el efecto del botón cuando se coloca el cursor por encima del botón*/
+    
+    .menu .btn-departamentos:hover {
+        border: 1px solid rgba(255, 255, 255, .4);
+    }
+    /*Separa el texto que coloquemos entre las etiquetas span y lo convierte en un bloque
+ que podemos alinear tranquilamente*/
+    
+    .menu .btn-departamentos span {
+        display: block;
+        font-size: 14px;
+        font-weight: bold;
+    }
+    /*Le da un pequeño borde a los enlaces dentro del navbar*/
+    
+    .menu .contenedor-enlaces-nav .enlaces a {
+        color: #ccc;
+        border: 1px solid transparent;
+        padding: 7px;
+        border-radius: 3px;
+        font-size: 14px;
+    }
+    /*Efecto de borde al colocar el cursor encima del texto*/
+    
+    .menu .contenedor-enlaces-nav .enlaces a:hover {
+        border: 1px solid rgba(255, 255, 255, .4);
+    }
+    /* ------------------------- 
+               GRID   
+    ------------------------- */
+    /*Permitimos que el grid que creemos se mueva conforme a lo que coloquemos en la página*/
+    
+    .contenedor-grid {
+        position: relative;
+    }
+    /*Se añaden las características de nuestro grid, colocando así las categorías y subcategorías
+ con un tamaño deinido, además*/
+    
+    .grid {
+        width: 100%;
+        display: none;
+        position: absolute;
+        top: 5px;
+        z-index: 1000;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 1fr;
+        grid-template-areas: "categorias subcategorias subcategorias subcategorias";
+    }
+    /*Activa el grid, es decir, lo muestra en pantalla*/
+    
+    .grid.activo {
+        display: grid;
+    }
+    /*Crea una base para el grid, antes de que realicemos cualquier cambio*/
+    
+    .grid::before {
+        content: "";
+        display: block;
+        background: transparent;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-bottom: 5px solid #fff;
+        position: absolute;
+        top: -5px;
+        left: 65px;
+    }
+    /*Altera las divisiones que creemos dentro de la grid*/
+    
+    .grid>div {
+        background: #fff;
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, .10);
+    }
+    /* ------------------------- 
+           Categorias
+    ------------------------- */
+    /*Crea los atributos del botón de regreso, cambiandole el color de fondo y de la 
+ fuente, además del cursor, tamaño, etc*/
+    
+    .grid .btn-regresar {
+        background: #232F3E;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        border-radius: 3px;
+        margin: 20px;
+        font-size: 16px;
+        cursor: pointer;
+        display: none;
+    }
+    /*Le añade un margen a la derecha para nuestro botoón de regreso*/
+    
+    .grid .btn-regresar i {
+        margin-right: 10px;
+    }
+    /*Crea la parte en la que colocamos los links a las categorías*/
+    
+    .grid .categorias {
+        grid-area: categorias;
+        padding-top: 10px;
+        min-height: 300px;
+        overflow: auto;
+    }
+    /*Retira la visualizacion de los subtitulos*/
+    
+    .grid .categorias .subtitulo {
+        display: none;
+    }
+    /*Cambia el estilo de los links para ir a cada categoría, cambiando
+el color de la fuente, su tamaño, etc*/
+    
+    .grid .categorias a {
+        color: #000;
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 20px;
+    }
+    /*Elimina la visalización de los links en itálica dentro del apartado de
+categorías*/
+    
+    .grid .categorias a i {
+        display: none;
+    }
+    /*Añade un efecto naranja en los links de las categorías al poner el
+cursor encima*/
+    
+    .grid .categorias a:hover {
+        color: #E47911;
+        font-weight: bold;
+    }
+    /*Cambia el display de los links en itálica al poner el cursor encima*/
+    
+    .grid .categorias a:hover i {
+        display: inline-block;
+    }
+    /* -------------------------
+
+
+          Subcategorias 
+
+
+   ------------------------- */
+    /*Crea el área de ñas subcategorias en el grid*/
+    
+    .grid .contenedor-subcategorias {
+        grid-area: subcategorias;
+    }
+    /*Le da las medidas a la grid de subcaterías, cambia el tamaño de las
+filas, columnas, etc*/
+    
+    .grid .subcategoria {
+        display: none;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr;
+        height: 100%;
+    }
+    /*Activa la grid de subcategorias*/
+    
+    .grid .subcategoria.activo {
+        display: grid;
+    }
+    /*Permite agregar las imágenes de las subcategorias*/
+    
+    .grid .subcategoria img {
+        width: 100%;
+        vertical-align: top;
+        height: 100%;
+        object-fit: cover;
+    }
+    /*Agrega los enlaces a cada subcategoría para hacer la búsqueda más sencilla*/
+    
+    .grid .enlaces-subcategoria {
+        padding-top: 10px;
+        height: 100%;
+        max-height: 300px;
+        overflow: auto;
+    }
+    /*Permite alinear los enlaces en la sección de la subcategoría
+con el display de bloques*/
+    
+    .grid .enlaces-subcategoria a {
+        color: #000;
+        display: block;
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+    /*Cambia el color del texto a naranja en los enlaces al colocar el cursor encima
+del mismo*/
+    
+    .grid .enlaces-subcategoria a:hover {
+        color: #E47911;
+    }
+    /*Le da color naranja a los subtitulos, además de agregarles padding
+a los lados y cambiar el tamaño de la letras a 18 pixeles*/
+    
+    .grid .subtitulo {
+        font-size: 18px;
+        font-weight: normal;
+        color: #E47911;
+        padding: 10px 20px;
+    }
+    /*Aumenta la altura de los links en el banner de la subcategoría */
+    
+    .grid .banner-subcategoria a {
+        display: block;
+        height: 100%;
+    }
+    /*Ayuda a alinear las imágenes de la subcategoría*/
+    
+    .grid .galeria-subcategoria {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: start;
+    }
+    /*Edita el tamaño de los links en las imágenes de la subcategoría*/
+    
+    .grid .galeria-subcategoria a {
+        width: 50%;
+        height: 50%;
+    }
+    /*Slideshow*/
+    /*Crea la base para los slides*/
+    
+    .home {
+        height: 40vh;
+        overflow: hidden;
+        position: relative;
+    }
+    /*Añade las animaciones de cada slide, además del tamaño y las posición*/
+    
+    .home .slide {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        z-index: 1;
+        display: none;
+        padding: 0 15px;
+        animation: slide 2s ease;
+    }
+    /*Clase que activa el slide, se usa en el js*/
+    
+    .home .slide.active {
+        display: flex;
+    }
+    /*Animación que nos permite mover la imagen del slide, cambiandolo de un tamaño
+    ligeramente más grande hasta el original*/
+    
+    @keyframes slide {
+        0% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+    /*Crea el contenedor para todo el slideshow (carrusel)*/
+    
+    .container {
+        max-width: 1170px;
+        margin: auto;
+    }
+    /*Provoca que el contenedor se adapte a la página*/
+    
+    .home .container {
+        flex-grow: 1;
+    }
+    /*Crea una división para el texto que se vaya a colocar encima de la imagen*/
+    
+    .home .caption {
+        width: 80%;
+    }
+    /*Le da un formato base al texto encima de la imagen
+    */
+    
+    .home .caption h1 {
+        font-size: 42px;
+        color: #000000;
+        margin: 0 100px 30px;
+    }
+    /*Le da formato y animación al texto h1 encima de la imagen*/
+    
+    .home .slide.active .caption h1 {
+        opacity: 0;
+        animation: captionText .5s ease forwards;
+        animation-delay: 1s;
+    }
+    /*Le da formato al texto extra que se agregue encima de la imagen, una especie
+    de subtitulo*/
+    
+    .home .caption p {
+        font-size: 18px;
+        margin: 15px 100px 30px;
+        color: #222222;
+    }
+    /*añade la animación y el delay del texto encima de la imagen*/
+    
+    .home .slide.active .caption p {
+        opacity: 0;
+        animation: captionText .5s ease forwards;
+        animation-delay: 1.2s;
+    }
+    /*En caso de que se coloquen links encima de la imagen, los convierte en un botón*/
+    
+    .home .caption a {
+        display: inline-block;
+        padding: 10px 30px;
+        background-color: #000000;
+        text-decoration: none;
+        color: #ffffff;
+    }
+    /*Inicia la animacion con opacidad 0 para hacer aparecer el texto*/
+    
+    .home .slide.active .caption a {
+        opacity: 0;
+        animation: captionText .5s ease forwards;
+        animation-delay: 1.4s;
+    }
+    /*Crea la animación del texto, desde valores negativos de las X hasta un valor
+    0, es decir, en la esquina del contenedor*/
+    
+    @keyframes captionText {
+        0% {
+            opacity: 0;
+            transform: translateX(-100px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0px);
+        }
+    }
+    /*Crea los controles para cambiar de slide al anterior y al siguiente*/
+    
+    .home .controls .prev,
+    .home .controls .next {
+        position: absolute;
+        z-index: 2;
+        top: 50%;
+        height: 40px;
+        width: 40px;
+        margin-top: -20px;
+        color: #ffffff;
+        background-color: #E47911;
+        text-align: center;
+        line-height: 40px;
+        font-size: 20px;
+        cursor: pointer;
+        transition: all .5s ease;
+    }
+    /*Agrega un efecto a los botones de anterior y siguiente al poner el cursor encima*/
+    
+    .home .controls .prev:hover,
+    .home .controls .next:hover {
+        background-color: #000000;
+    }
+    /*Cambia el margen izquierdo del botón anterior*/
+    
+    .home .controls .prev {
+        left: 0;
+    }
+    /*Cambia el margen derecho del botón siguiente*/
+    
+    .home .controls .next {
+        right: 0;
+    }
+    /*Crea la base para los indicadores que nos dicen en que slide se encuentra
+    el carrusel*/
+    
+    .home .indicator {
+        position: absolute;
+        left: 50%;
+        top: 90%;
+        z-index: 2;
+        transform: translateX(-50%);
+    }
+    
+    .home .indicator div {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        color: #ffffff;
+        background-color: rgba(0, 0, 0, .4);
+        border-radius: 20%;
+        text-align: center;
+        line-height: 25px;
+        margin: 0 3px;
+    }
+    /*cambia el color de fondo del indicador que se encuentre activo actualmente*/
+    
+    .home .indicator div.active {
+        background-color: #000;
+    }
+    /*responsive*/
+    /*Hace de los controles invisibles*/
+    
+    @media(max-width: 767px) {
+        .controls {
+            display: none;
+        }
+    }
+    /*Importa las fuentes que se van a utilizar*/
+    
+    @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800');
+    @import url('https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700');
+    /*------------------------------------------------------------------ Categories Shop -------------------------------------------------------------------*/
+    /*Agrega espacio en blanco alrededor del contenido del elemento*/
+    
+    .categories-shop {
+        padding: 70px 0px;
+    }
+    /*Básicamente crea una caja o contenedor en el que se coloca el contenido*/
+    
+    .shop-cat-box {
+        margin-bottom: 30px;
+        position: relative;
+        padding: 3px;
+        overflow: hidden;
+        border: 0px solid #000000;
+        box-shadow: 9px 9px 30px 0px rgba(0, 0, 0, 0.3);
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease-in-out 0s;
+    }
+    /*Ayuda a organizar especificamente las imágenes dentro de dichos contenedores*/
+    
+    .shop-cat-box img {
+        margin: -10px 0 0 -10px;
+        max-width: none;
+        width: -webkit-calc(100% + 10px);
+        width: calc(100% + 10px);
+        opacity: 0.9;
+        -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+        transition: opacity 0.35s, transform 0.35s;
+        -webkit-transform: translate3d(10px, 10px, 0);
+        transform: translate3d(10px, 10px, 0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+    /*Le agrega un efecto a las imágenes de los contenedores, lo vuelve ligeramente transparente
+    y cambia su posicion 3d*/
+    
+    .shop-cat-box:hover img {
+        opacity: 0.6;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+    /*Cambia los enlaces dentro de los contenedores para darles márgenes muy especificos además
+    de alinearlos y darles color*/
+    
+    .shop-cat-box a {
+        position: absolute;
+        z-index: 2;
+        bottom: 0px;
+        left: 0px;
+        right: 0;
+        margin: 0 auto;
+        text-align: center;
+        border: none;
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 700;
+        padding: 12px 0px;
+    }
+    /*Añade color de fondo y espacio en blanco a los productos que agreguemos*/
+    
+    .box-add-products {
+        padding: 70px 0px;
+        background-color: #f4f4f4;
+    }
+    /*Contenedor para las ofertas*/
+    
+    .offer-box {
+        position: relative;
+        overflow: hidden;
+    }
+    /*Contenedor para las ofertas en productos específicos*/
+    
+    .offer-box-products {
+        box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease-in-out 0s;
+    }
+    /*Efecto que se aplica a dichos contenedores al colocar el cursor encima, mueve
+    el contenedor hacia arriba y le agrega una ligera sombra*/
+    
+    .offer-box-products:hover {
+        -webkit-transform: translateY(6px);
+        transform: translateY(6px);
+        box-shadow: 0px 9px 15px 0px rgba(0, 0, 0, 0.1);
+    }
+    /*------------------------------------------------------------------ Products -------------------------------------------------------------------*/
+    /*Le agrega un margen a la parte inferior de los títulos*/
+    
+    .title-all {
+        margin-bottom: 30px;
+    }
+    /*Cambia los atributos de los encabezados h1 dentro de la clase, añadiendole peso a la fuente,
+    obligandola a ser de color negro y cambiando su tamaño a 32 pixeles*/
+    
+    .title-all h1 {
+        font-size: 32px;
+        font-weight: 700;
+        color: #000000;
+    }
+    /*Le da un formato general a los parrafos dentro de la misma clase, cambiando el color de la letra
+    a un tono grisáceo y cambiando el tamaño a 16 pixeles*/
+    
+    .title-all p {
+        color: #999999;
+        font-size: 16px;
+    }
+    /*Añade espacio en blanco alrededor de los productos, creando una especie de caja/contenedor*/
+    
+    .products-box {
+        padding: 70px 0px;
+    }
+    /*Añade un margen inferior al menú especial*/
+    
+    .special-menu {
+        margin-bottom: 40px;
+    }
+    /*Permite que se muestre el grupo de botones de filtro, además de ayudar a alinearlo*/
+    
+    .filter-button-group {
+        display: inline-block;
+    }
+    /*Cambia los atributos de los botones dentro del grupo, asignándoles color de fondo, letra,
+    un cursor diferente, etc*/
+    
+    .filter-button-group button {
+        background: #b0b435;
+        color: #ffffff;
+        border: none;
+        cursor: pointer;
+        padding: 5px 30px;
+        font-size: 18px;
+    }
+    /*Cambia el color de fondo del botón activo*/
+    .filter-button-group button.active {
+        background: #000000;
+    }
+    /*Crea un margen inferior para productos individuales*/
+    .products-single {
+        overflow: hidden;
+        position: relative;
+        margin-bottom: 30px;
+    }
+    /*Cambia la posición de la imagen en el contenedor a relativa y evita que 
+    se visualice cualquier tipo de overflow*/
+    .products-single .box-img-hover {
+        overflow: hidden;
+        position: relative;
+    }
+    /*Centra la imagen, retira el margen y lo acomoda en forma de bloque*/
+    .box-img-hover img {
+        margin: 0 auto;
+        text-align: center;
+        display: block;
+    }
+    /*Organiza el label para colocarlo en el contenedor*/
+    .type-lb {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        z-index: 8;
+    }
+    /*Le da características y fondo especial a los label que contengan la palabra OFERTA
+    dentro del contenedor para así resaltar los productos con ofertas especiales*/
+    .type-lb .sale {
+        background: #b0b435;
+        color: #ffffff;
+        padding: 2px 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    /*Le da características y fondo especial a los label que contengan la palabra NUEVO
+    dentro del contenedor para asi resaltar los productos recien agregados*/
+    .type-lb .new {
+        background: #000000;
+        color: #ffffff;
+        padding: 2px 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    /*Formato básico para la escritura dentro del contenedor*/
+    .why-text {
+        background: #f5f5f5;
+        padding: 15px;
+    }
+    /*Cambia el tamaño y ancho de la letra h4 además de agregar espacio en blanco debajo
+    de este mismo*/
+    .why-text h4 {
+        font-size: 16px;
+        font-weight: 700;
+        padding-bottom: 15px;
+    }
+    /*Cambia el tamaño, uente, peso, color y fondo de la letra h5 para resaltar aún más
+    el "encabezado"*/
+    .why-text h5 {
+        font-size: 18px;
+        font-family: 'Poppins', sans-serif;
+        padding: 4px;
+        display: inline-block;
+        background: #b0b435;
+        color: #ffffff;
+        font-weight: 600;
+    }
+    /*Crea una mascara de contenido encima de la imagen del producto*/
+    .mask-icon {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+    }
+    /*Permite colocar botones en dicha máscara que se muevan junto con esta*/
+    .mask-icon ul {
+        display: inline-block;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+    /*Le agrega color de fondo a los textos de lista ul*/
+    .mask-icon ul li {
+        background: #b0b435;
+    }
+    /*Cambia especificamente el color de las listas ul con enlace
+    por blanco*/
+    .mask-icon ul li a {
+        color: #ffffff;
+        padding: 5px 10px;
+        display: block;
+    }
+    /*Mascara para agregar al carrito*/
+    .mask-icon a.cart {
+        background: #b0b435;
+        position: absolute;
+        bottom: 0;
+        left: 0px;
+        padding: 10px 20px;
+        font-weight: 700;
+        color: #ffffff;
+    }
+    /*Animación para el botón de agregar al carrito*/
+    .mask-icon a.cart:hover {
+        background: #000000;
+        color: #ffffff;
+    }
+    /**/
+    .mask-icon ul li a:hover {
+        background: #000000;
+        color: #ffffff;
+    }
+    
+    .products-single .mask-icon {
+        background: rgba(1, 1, 1, 0.5);
+        top: -100%;
+        -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+        opacity: 0;
+        -webkit-transition: all 0.3s ease-out 0.5s;
+        -moz-transition: all 0.3s ease-out 0.5s;
+        -o-transition: all 0.3s ease-out 0.5s;
+        -ms-transition: all 0.3s ease-out 0.5s;
+        transition: all 0.3s ease-out 0.5s;
+    }
+    
+    .products-single:hover .mask-icon {
+        -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=100)";
+        filter: alpha(opacity=100);
+        opacity: 1;
+        top: 0px;
+        -webkit-transition-delay: 0s;
+        -moz-transition-delay: 0s;
+        -o-transition-delay: 0s;
+        -ms-transition-delay: 0s;
+        transition-delay: 0s;
+        -webkit-animation: bounceY 0.9s linear;
+        -moz-animation: bounceY 0.9s linear;
+        -ms-animation: bounceY 0.9s linear;
+        animation: bounceY 0.9s linear;
+    }
+    
+    @keyframes bounceY {
+        0% {
+            transform: translateY(-205px);
+        }
+        40% {
+            transform: translateY(-100px);
+        }
+        65% {
+            transform: translateY(-52px);
+        }
+        82% {
+            transform: translateY(-25px);
+        }
+        92% {
+            transform: translateY(-12px);
+        }
+        55%,
+        75%,
+        87%,
+        97%,
+        100% {
+            transform: translateY(0px);
+        }
+    }
+    
+    @-moz-keyframes bounceY {
+        0% {
+            -moz-transform: translateY(-205px);
+        }
+        40% {
+            -moz-transform: translateY(-100px);
+        }
+        65% {
+            -moz-transform: translateY(-52px);
+        }
+        82% {
+            -moz-transform: translateY(-25px);
+        }
+        92% {
+            -moz-transform: translateY(-12px);
+        }
+        55%,
+        75%,
+        87%,
+        97%,
+        100% {
+            -moz-transform: translateY(0px);
+        }
+    }
+    
+    @-webkit-keyframes bounceY {
+        0% {
+            -webkit-transform: translateY(-205px);
+        }
+        40% {
+            -webkit-transform: translateY(-100px);
+        }
+        65% {
+            -webkit-transform: translateY(-52px);
+        }
+        82% {
+            -webkit-transform: translateY(-25px);
+        }
+        92% {
+            -webkit-transform: translateY(-12px);
+        }
+        55%,
+        75%,
+        87%,
+        97%,
+        100% {
+            -webkit-transform: translateY(0px);
+        }
+    }
+    /*------------------------------------------------------------------ All Pages -------------------------------------------------------------------*/
+    
+    .all-title-box {
+        background: url("../images/all-bg-title.jpg") no-repeat center center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        text-align: center;
+        background-attachment: fixed;
+        padding: 70px 0px;
+        position: relative;
+    }
+    
+    .all-title-box::before {
+        background: rgba(0, 0, 0, 0.6);
+        content: "";
+        position: absolute;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+    }
+    
+    .all-title-box h2 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #ffffff;
+        float: left;
+        padding: 10px 0px;
+    }
+    
+    .all-title-box .breadcrumb {
+        background: #b0b435;
+        margin: 0px;
+        display: inline-block;
+        border-radius: 0px;
+        float: right;
+    }
+    
+    .all-title-box .breadcrumb li {
+        display: inline-block;
+        color: #000000;
+        font-size: 16px;
+    }
+    
+    .all-title-box .breadcrumb li a {
+        color: #ffffff;
+        font-size: 16px;
+    }
+    
+    .all-title-box .breadcrumb-item+.breadcrumb-item::before {
+        color: #000000;
+    }
+    
+    .about-box-main {
+        padding: 70px 0px;
+    }
+    
+    .noo-sh-title {
+        font-size: 28px;
+        text-transform: uppercase;
+        font-style: normal;
+        font-weight: 700;
+        margin-bottom: 30px;
+    }
+    
+    .noo-sh-title-top {
+        font-size: 28px;
+        text-transform: uppercase;
+        font-style: normal;
+        font-weight: 700;
+        margin-bottom: 0px;
+    }
+    
+    .about-box-main p {
+        padding-bottom: 20px;
+    }
+    
+    .service-block-inner {
+        padding: 15px 20px;
+        position: relative;
+        margin-bottom: 30px;
+    }
+    
+    .about-box-main a {
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 700;
+        border: none;
+    }
+    /*Le agrega espacio en blanco a los bordes del botón about*/
+    .about-box-main a.btn {
+        padding: 12px 15px;
+    }
+    /*Crea un bloque de servicio como pseudoelemento antes de la etiqueta*/
+    .service-block-inner::before {
+        content: "";
+        width: 100%;
+        height: 5px;
+        border-radius: 0px;
+        background: #000000;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: all 0.5s ease 0s;
+    }
+    /*Crea un bloque de servicio como pseudoelemento despues de la etiqueta*/
+    .service-block-inner::after {
+        content: "";
+        width: 100%;
+        height: 0;
+        border-radius: 0px;
+        background: #b0b435;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        transition: all 0.5s ease 0s;
+    }
+    /*Cambia la fuente h3 del botón a mayusculas con peso mayor y tamaño mayor*/
+    .service-block-inner h3 {
+        font-size: 24px;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+    /*Cambia la fuente general de los parrafos dentro de los botones*/
+    .service-block-inner p {
+        margin: 0px;
+        font-size: 16px;
+        font-weight: 300;
+        padding-bottom: 0px;
+    }
+    /*Termina la parte comentada por Diego Sánchez Luna*/
+    .service-block-inner:hover::after {
+        height: 100%;
+    }
+    
+    .service-block-inner:hover h3 {
+        color: #ffffff;
+        transition: all 0.5s ease 0s;
+    }
+    
+    .service-block-inner:hover p {
+        color: #ffffff;
+        transition: all 0.5s ease 0s;
+    }
+    
+    .shop-box-inner {
+        padding: 70px 0px;
+    }
+    
+    .search-product {
+        position: relative;
+    }
+    
+    .search-product input[type="text"] {
+        background: #333333;
+        border: 0;
+        box-shadow: none;
+        border-radius: 0;
+        color: #ffffff;
+        height: 55px;
+        font-weight: 300;
+        font-size: 16px;
+        margin-bottom: 15px;
+        padding: 0 20px;
+        -webkit-transition: all .5s ease;
+        -moz-transition: all .5s ease;
+        transition: all .5s ease;
+        width: 100%;
+        outline: 0;
+    }
+    
+    .search-product .form-control::-moz-placeholder {
+        color: #ffffff;
+        opacity: 1;
+    }
+    
+    .search-product button {
+        background: #000000;
+        color: #ffffff;
+        font-size: 18px;
+        position: absolute;
+        right: 0px;
+        padding: 12px 15px;
+        top: 0;
+        line-height: 27px;
+        border: none;
+        cursor: pointer;
+        height: 100%;
+    }
+    
+    .search-product button:hover {
+        background: #b0b435;
+    }
+    
+    .filter-sidebar-left {
+        margin-bottom: 20px;
+    }
+    
+    .title-left {
+        font-size: 16px;
+        border-bottom: 3px solid #000000;
+        margin-bottom: 20px;
+    }
+    
+    .title-left h3 {
+        font-weight: 700;
+    }
+    
+    .list-group-item {
+        border: none;
+        padding: 5px 20px;
+        font-size: 14px;
+    }
+    
+    .text-muted {
+        padding: 10px 0px;
+    }
+    
+    .list-group-item[data-toggle="collapse"]::after {
+        width: 0;
+        height: 0;
+        position: absolute;
+        top: calc(50% - 12px);
+        right: 10px;
+        content: '';
+        -webkit-transition: top .2s, -webkit-transform .2s;
+        transition: top .2s, -webkit-transform .2s;
+        transition: transform .2s, top .2s;
+        transition: transform .2s, top .2s, -webkit-transform .2s;
+        font-family: FontAwesome;
+        content: "\f105";
+    }
+    
+    .list-group-tree .list-group-collapse .list-group {
+        margin-left: 25px;
+        border-left: 1px solid #ced4da;
+    }
+    
+    .list-group-tree .list-group-item.active {
+        color: #b0b435;
+        background-color: #fff;
+        font-weight: 700;
+    }
+    
+    .list-group-tree .list-group-collapse .list-group>.list-group-item::before {
+        position: absolute;
+        top: 14px;
+        left: 0;
+        content: '';
+        width: 8px;
+        height: 1px;
+        background-color: #ced4da;
+    }
+    
+    .list-group-tree .list-group-item:hover {
+        color: #b0b435;
+        background-color: #fff;
+        outline: 0;
+        font-weight: 700;
+    }
+    
+    .brand-box {
+        display: inline-block;
+        width: 100%;
+        height: 259px;
+        position: relative;
+    }
+     /*------------------------------------------------------------------ Blog -------------------------------------------------------------------*/
+    /*Comienza el código comentado por: Meza Moreno Alejandra*/
+    /*Le asignamos las siguientes características a la clase .lastest-blog*/
+    .latest-blog {
+        padding: 70px 0px;
+        background: #f5f5f5;
+    }
+    /*Le asignamos las siguientes características a la clase .blog-box*/
+    .blog-box {
+        -webkit-box-shadow: 0px 5px 35px 0px rgba(148, 146, 245, 0.15);
+        box-shadow: 0px 5px 35px 0px rgba(148, 146, 245, 0.15);
+        background: #ffffff;
+        margin-bottom: 30px;
+    }
+    /*Definimos que la posición será relativa*/
+    .blog-content {
+        position: relative;
+    }
+    /*Declaramos el tamaño del título*/
+    .title-blog {
+        padding: 40px 30px 40px 30px;
+    }
+    /*Le asignamos las siguientes características a la etiqueta h3*/
+    .title-blog h3 {
+        font-size: 20px;
+        font-weight: 700;
+        color: #000000;
+    }
+    /*Definimos que el margen será de 0*/
+    .title-blog p {
+        margin: 0px;
+    }
+    /*Le asignamos las siguientes características a la clase .option-blogr*/
+    .option-blog {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    /*Le asignamos a la etiqueta li el siguiente valor*/
+    .option-blog li {
+        display: inline-block;
+    }
+    /*Le asignamos las siguientes características a la etiqueta a, dentro de la etiqueta li*/
+    .option-blog li a {
+        background: #000000;
+        display: inline-block;
+        font-size: 18px;
+        color: #ffffff;
+        width: 34px;
+        height: 34px;
+        text-align: center;
+        line-height: 34px;
+    }
+    /*Cuando se pase el mouse sobre la opción, se aplicarán los cambios dentro de las llaves*/
+    .option-blog li a:hover {
+        background: #b0b435;
+        color: #ffffff;
+    }
+    /*Le agregamos un color a .tooltip-inner*/
+    .tooltip-inner {
+        background-color: #b0b435;
+    }
+    /*Le asignamos las siguientes características a .tooltip.bs-tooltip-right*/
+    .tooltip.bs-tooltip-right .arrow:before {
+        border-right-color: #b0b435 !important;
+        padding-top: 0px !important;
+        top: 0px !important;
+    }
+    /*Le asignamos las siguientes características a .tooltip.bs-tooltip-left*/
+    .tooltip.bs-tooltip-left .arrow:before {
+        border-left-color: #b0b435 !important;
+        padding-top: 0px !important;
+        padding-right: 5px !important;
+        top: 0px !important;
+    }
+    /*Le asignamos las siguientes características a .tooltip.bs-tooltip-bottom*/
+    .tooltip.bs-tooltip-bottom .arrow:before {
+        border-right-color: #b0b435 !important;
+    }
+    /*Le asignamos las siguientes características a .tooltip.bs-tooltip-top*/
+    .tooltip.bs-tooltip-top .arrow:before {
+        border-top-color: #b0b435 !important;
+        padding-top: 0px !important;
+        top: 0px !important;
+    }
+    /*------------------------------------------------------------------ Instagram Feed -------------------------------------------------------------------*/
+    /*Le asignamos las siguientes características a la clase que contiene nuestro instagram*/
+    .instagram-box {
+        padding: 70px 0px;
+        background: url(../images/ins-bg.jpg) no-repeat center center;
+        background-size: auto auto;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        position: relative;
+    }
+    /*Le asignamos las siguientes características a la clase que contiene nuestro instagram*/
+    .instagram-box::before {
+        background: rgba(0, 0, 0, 0.9);
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+        content: "";
+        position: absolute;
+        z-index: 0;
+    }
+    /*Aquí estamos declarando los elementos necesarios para 
+    lograr que nuestro feed de instagram tenga movimiento, botón de anterior*/
+    .main-instagram.owl-carousel .owl-nav button.owl-prev {
+        background: #000000;
+        position: absolute;
+        z-index: 1;
+        display: block;
+        height: 100%;
+        width: 50px;
+        line-height: 0px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #ffffff;
+        top: 0;
+        padding: 0;
+        margin-top: 0;
+        opacity: 1;
+        left: 0px;
+        -webkit-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+    }
+    /*Aquí estamos declarando los elementos necesarios para 
+    lograr que nuestro feed de instagram tenga movimiento, botón de siguiente*/
+    .main-instagram.owl-carousel .owl-nav button.owl-next {
+        background: #000000;
+        position: absolute;
+        z-index: 1;
+        display: block;
+        height: 100%;
+        width: 50px;
+        line-height: 0px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #ffffff;
+        top: 0;
+        padding: 0;
+        margin-top: 0;
+        opacity: 1;
+        right: 0px;
+        -webkit-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+    }
+    /*Aquí declaramos que cuando el mouse este sobre estos elementos, cambiarán de color*/
+    .main-instagram.owl-carousel .owl-nav button.owl-next:hover,
+    .main-instagram.owl-carousel .owl-nav button.owl-prev:hover {
+        background: #b0b435;
+    }
+    /*Declaramos la posición de .ins-inner-box*/
+    .ins-inner-box {
+        position: relative;
+    }
+    /*Aquí asignamos las características de la clase .hov-in*/
+    .hov-in {
+        opacity: 0;
+        background: rgba(211, 59, 51, 0.5);
+        bottom: -100%;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all 0.3s ease-out 0.5s;
+        -moz-transition: all 0.3s ease-out 0.5s;
+        -o-transition: all 0.3s ease-out 0.5s;
+        -ms-transition: all 0.3s ease-out 0.5s;
+        transition: all 0.3s ease-out 0.5s;
+        text-align: center;
+        display: table;
+    }
+    /*Aquí declaramos la posición de .hov-in a*/
+    .hov-in a {
+        display: table-cell;
+        vertical-align: middle;
+        height: 100%;
+    }
+    /*Le asignamos las siguientes características a  la etiqueta i, dentro de .hov-in*/
+    .hov-in i {
+        color: #000000;
+        font-size: 48px;
+        position: relative;
+        z-index: 2;
+    }
+    /*Aquí declaramos que cuando el mouse esté sobre este elemento, cambiará de color*/
+    .hov-in a i:hover {
+        color: #ffffff;
+    }
+    /*Aquí declaramos que cuando el mouse esté sobre este elemento, cambiará de color*/
+    .ins-inner-box:hover .hov-in {
+        bottom: 0;
+        opacity: 1;
+    }
+    /*------------------------------------------------------------------ Footer Main -------------------------------------------------------------------*/
+    /*Aquí declaramos el tamaño y fondo de .footer-main*/
+    .footer-main {
+        padding: 70px 0px;
+        background: #010101;
+    }
+    /*Aquí le asignamos un tamaño al borde, color, y posición a .footer-main hr*/
+    .footer-main hr {
+        border-top: 1px solid rgba(255, 255, 255, .6);
+    }
+    /*Aquí asignamos el tamaño del margen*/
+    .footer-top-box {
+        margin-bottom: 30px;
+    }
+    /*Aquí asignamos características a la etiqueta h3, dentro de .footer-top-box*/
+    .footer-top-box h3 {
+        color: #ffffff;
+        position: relative;
+        font-size: 20px;
+    }
+    /*Aquí le asignamos las siguientes características a la etiqueta h3*/
+    .footer-top-box h3::before {
+        border-bottom: 2px solid #b0b435;
+        content: "";
+        height: 3px;
+        width: 50%;
+        position: absolute;
+        bottom: 3px;
+        left: 0px;
+    }
+    /*Le asignamos el valor del margen*/
+    .list-time {
+        margin-top: 15px;
+    }
+    /*Aquí le asignamos características a la etiqueta li, dentro de .list-time*/
+    .footer-top-box .list-time li {
+        color: #ffffff;
+        font-size: 16px;
+        display: block;
+        float: none;
+    }
+    /*Aquí definimos el margen y posición del .newsletter-box*/
+    .newsletter-box {
+        margin-top: 15px;
+        position: relative;
+    }
+    /*Aquí le asignamos el diseño al .newsletter-bow input*/
+    .newsletter-box input {
+        height: 40px;
+        border: none;
+        padding: 0 10px;
+        background: transparent;
+        border-radius: 0;
+        background: #fff;
+        padding: 0 20px;
+        width: 100%;
+    }
+    /*Aquí le asignamos características a la etiqueta i*/
+    .newsletter-box i {
+        position: absolute;
+        right: 15px;
+        top: 10px;
+        font-size: 20px;
+    }
+    /*Aquí le asignamos el diseño al botón del .newsletter-box*/
+    .newsletter-box button {
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 500;
+    }
+    /*Aquí le asignamos características a la etiqueta p*/
+    .footer-top-box p {
+        padding-bottom: 15px;
+        color: #cccccc;
+    }
+    /*Aquí le asignamos características a la etiqueta ul*/
+    .footer-top-box ul {
+        display: inline-block;
+    }
+    /*Aquí le asignamos una posición a las etiquetas ul y li*/
+    .footer-top-box ul li {
+        float: left;
+        margin-right: 5px;
+    }
+    /*Aquí les damos diseño a las etiquetas ul, li y a*/
+    .footer-top-box ul li a {
+        color: #ffffff;
+        display: inline-block;
+        width: 36px;
+        height: 36px;
+        border: 2px solid #ffffff;
+        text-align: center;
+        line-height: 32px;
+    }
+    /*Aquí declaramos que cuando el mouse este sobre las etiquetas ul, li y a, cambiará de color*/
+    .footer-top-box ul li a:hover {
+        color: #b0b435;
+        border-color: #b0b435;
+    }
+    /*Se le asigna un valor de margen a las clases mencionadas*/
+    .footer-widget,
+    .footer-link,
+    .footer-link-contact {
+        margin-top: 15px;
+    }
+    /*Aquí le asignamos características a la etiqueta h4 dentro de .footer-widget*/
+    .footer-widget h4 {
+        color: #ffffff;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+        position: relative;
+        font-weight: 700;
+    }
+    /*Aquí le asignamos características a la etiqueta h4 dentro de .footer-widget, y estas se agregarán antes*/
+    .footer-widget h4::before {
+        border-bottom: 3px solid #b0b435;
+        content: "";
+        height: 3px;
+        width: 100%;
+        position: absolute;
+        bottom: 3px;
+        left: 0px;
+    }
+    /*Aquí le asignamos características a la etiqueta p que está dentro de .footer-widget*/
+    .footer-widget p {
+        color: #cccccc;
+        font-weight: 400;
+        font-size: 14px;
+        padding-bottom: 20px;
+    }
+    /*Aquí le asignamos características a la etiqueta h4 dentro de .footer-link*/
+    .footer-link h4 {
+        color: #ffffff;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+        position: relative;
+        font-weight: 700;
+    }
+    /*Aquí le asignamos características a la etiqueta h4 dentro de .footer-link, esto se agregará antes*/
+    .footer-link h4::before {
+        border-bottom: 3px solid #b0b435;
+        content: "";
+        height: 3px;
+        width: 100%;
+        position: absolute;
+        bottom: 3px;
+        left: 0px;
+    }
+    /*Definimos el margen de las etiquetas ul y li*/
+    .footer-link ul li {
+        margin-right: 5px;
+    }
+    /*Aquí le asignamos características a las etiquetas ul, li y a*/
+    .footer-link ul li a {
+        color: #ffffff;
+        text-align: left;
+        display: block;
+        line-height: 32px;
+        position: relative;
+        padding-left: 15px;
+        transition: all .3s ease-in-out;
+        -webkit-transition: all .3s ease-in-out;
+        -moz-transition: all .3s ease-in-out;
+        -o-transition: all .3s ease-in-out;
+        -ms-transition: all .3s ease-in-out;
+    }
+    /*Aquí le asignamos características a las etiquetas a, ul y li, esto se agrega antes*/
+    .footer-link ul li a::before {
+        font-family: FontAwesome;
+        content: "\f105";
+        position: absolute;
+        left: 5px;
+        line-height: 35px;
+        font-size: 16px;
+        transition: all .3s ease-in-out;
+        -webkit-transition: all .3s ease-in-out;
+        -moz-transition: all .3s ease-in-out;
+        -o-transition: all .3s ease-in-out;
+        -ms-transition: all .3s ease-in-out;
+    }
+    /*Declaramos que cuando el mouse este sobre estas etiquetas, se aplicará el cambio*/
+    .footer-link ul li a:hover::before {
+        left: 5px;
+    }
+    /*Declaramos que cuando el mouse este sobre estas etiquetas, cambiará de color*/
+    .footer-link ul li a:hover {
+        color: #b0b435;
+        border-color: #b0b435;
+        padding-left: 20px;
+    }
+    /*Definimos las características que se le aplicarán a la etiqueta h4, dentro de .footer-link-contact*/
+    .footer-link-contact h4 {
+        color: #ffffff;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+        position: relative;
+        font-weight: 700;
+    }
+    /*Definimos las características que se le aplicarán a la etiqueta h4, dentro de .footer-link-contact,
+    esto se aplicará antes*/
+    .footer-link-contact h4::before {
+        border-bottom: 3px solid #b0b435;
+        content: "";
+        height: 3px;
+        width: 100%;
+        position: absolute;
+        bottom: 3px;
+        left: 0px;
+    }
+    /*Definimos el margen que se le aplicará  a las etiquetas ul y li, dentro de .footer-link-contact*/
+    .footer-link-contact ul li {
+        margin-bottom: 12px;
+    }
+    /*Definimos la posición en la que estaránlas etiquetas i, ul y li, dentro de .footer-link-contact*/
+    .footer-link-contact ul li i {
+        position: absolute;
+        left: 0;
+        top: 5px;
+        padding-right: 6px;
+    }
+    /*Definimos el margen y color que se le aplicará a las etiquetas ul, li, y p, dentro de .footer-link-contact*/
+    .footer-link-contact ul li p {
+        padding-left: 25px;
+        color: #cccccc;
+        position: relative;
+    }
+    /*Definimos las características que se aplicarán a las etiquetas ul, li y p, dentro de .footer-link-contact*/
+    .footer-link-contact ul li p {
+        font-size: 16px;
+        color: #cccccc;
+        font-weight: 300;
+        padding-right: 16px;
+        line-height: 24px;
+    }
+    /*Definimos el color que se le aplicará a las etiquetas ul, li, p y a, dentro de .footer-link-contact*/
+    .footer-link-contact ul li p a {
+        color: #cccccc;
+    }
+    /*Definimos el color que se le aplicará a las etiquetas ul, li, p y a,  dentro de .footer-link-contact 
+    cuando el mouse éste sobre ellas*/
+    .footer-link-contact ul li p a:hover {
+        color: #b0b435;
+    }
+    /*------------------------------------------------------------------ Copyright -------------------------------------------------------------------*/
+    /*Al .footer-copyright le asignamos las siguientes características*/
+    .footer-copyright {
+        background: #060606;
+        padding: 20px 0px;
+        position: relative;
+    }
+    /*A la etiqueta p, dentro de .footer-copyright, se le agregan las siguientes características*/
+    .footer-copyright p {
+        text-align: center;
+        color: #ffffff;
+        font-size: 16px;
+    }
+    /*A la etiqueta a, dentro de .footer-copyright, se le agrega el siguiente color*/
+    .footer-copyright p a {
+        color: #ffffff;
+    }
+    /*Definimos que cuando el mouse pase sobre las etiquetas p y a, cambiará de color*/
+    .footer-copyright p a:hover {
+        color: #b0b435;
+    }
+    /*------------------------------------------------------------------ All Pages -------------------------------------------------------------------*/
+    /*Definimos que .all-title-box tendrá la siguiente posición, así como la imagen que le corresponde*/
+    .all-title-box {
+        background: url("../images/all-bg-title.jpg") no-repeat center center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        text-align: center;
+        background-attachment: fixed;
+        padding: 70px 0px;
+        position: relative;
+    }
+    /*Definimos las características que se le aplicarán a la clase, estas van antes*/
+    .all-title-box::before {
+        background: rgba(0, 0, 0, 0.6);
+        content: "";
+        position: absolute;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+    }
+    /*A la etiqueta h2, dentro de .all-title-box, se le agregan las siguientes características*/
+    .all-title-box h2 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #ffffff;
+        float: left;
+        padding: 10px 0px;
+    }
+    /*Definimos que .all-title-box tendrá esos margenes, color de fondo, entre otras características*/
+    .all-title-box .breadcrumb {
+        background: #b0b435;
+        margin: 0px;
+        display: inline-block;
+        border-radius: 0px;
+        float: right;
+    }
+    /*Definimos que la etiqueta li, dentro de .all-title-box y .breadcrum, tendrá esas características*/
+    .all-title-box .breadcrumb li {
+        display: inline-block;
+        color: #000000;
+        font-size: 16px;
+    }
+    /*Agregamos el siguiente color y tamaño de fondo a las etiquetas li y a*/
+    .all-title-box .breadcrumb li a {
+        color: #ffffff;
+        font-size: 16px;
+    }
+    /*Agregamos el color a los elementos mencionados*/
+    .all-title-box .breadcrumb-item+.breadcrumb-item::before {
+        color: #000000;
+    }
+    /*Definimos el tamaño de .about-box-main*/
+    .about-box-main {
+        padding: 70px 0px;
+    }
+    /*Definimos las características de .noo-sh-title*/
+    .noo-sh-title {
+        font-size: 28px;
+        text-transform: uppercase;
+        font-style: normal;
+        font-weight: 700;
+        margin-bottom: 30px;
+    }
+    /*Definimos las características de .noo-sh-title-top*/
+    .noo-sh-title-top {
+        font-size: 28px;
+        text-transform: uppercase;
+        font-style: normal;
+        font-weight: 700;
+        margin-bottom: 0px;
+    }
+    /*Definimos el tamaño de la etiqueta p*/
+    .about-box-main p {
+        padding-bottom: 20px;
+    }
+    /*Definimos el tamaño de margenes y posición de .service-block-inner*/
+    .service-block-inner {
+        padding: 15px 20px;
+        position: relative;
+        margin-bottom: 30px;
+    }
+    /*Agregamos características a la etiqueta a*/
+    .about-box-main a {
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 700;
+        border: none;
+    }
+    /*Definimos el tamaño de .about-box-main y a.btn*/
+    .about-box-main a.btn {
+        padding: 12px 15px;
+    }
+    /*Definimos las características de .service-block-inner::before*/
+    .service-block-inner::before {
+        content: "";
+        width: 100%;
+        height: 5px;
+        border-radius: 0px;
+        background: #000000;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: all 0.5s ease 0s;
+    }
+    /*Definimos las características de .service-block-inner::after*/
+    .service-block-inner::after {
+        content: "";
+        width: 100%;
+        height: 0;
+        border-radius: 0px;
+        background: #b0b435;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        transition: all 0.5s ease 0s;
+    }
+    /*Definimos los tamaños que se aplicarán a la etiqueta h3 dentro de .service-block-inner*/
+    .service-block-inner h3 {
+        font-size: 24px;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+    /*Definimos los tamaños y margenes que se aplicarán a la etiqueta p dentro de .service-block-inner*/
+    .service-block-inner p {
+        margin: 0px;
+        font-size: 16px;
+        font-weight: 300;
+        padding-bottom: 0px;
+    }
+    /*Declaramos que al colocar el mouse sobre .service-block-inner::after, se aplicará el cambio*/
+    .service-block-inner:hover::after {
+        height: 100%;
+    }
+    /*Declaramos que al colocar el mouse sobre la etiqueta h3 dentro de .service-block-inner:hover, 
+    se aplicará el cambio de color y se generará una transición*/
+    .service-block-inner:hover h3 {
+        color: #ffffff;
+        transition: all 0.5s ease 0s;
+    }
+    /*Declaramos que al colocar el mouse sobre la etiqueta p dentro de .service-block-inner:hover, 
+    se aplicará el cambio de color y se generará una transición*/    
+    .service-block-inner:hover p {
+        color: #ffffff;
+        transition: all 0.5s ease 0s;
+    }
+    /*Aquí definimos el movimiento que dará .out-team*/
+    .our-team {
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        position: relative;
+        transition: all 0.3s ease 0s;
+    }
+    /*Cuando se pase el mouse sobre esta clase, se aplicarán los cambios*/
+    .our-team:hover {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+    /*Características que se le aplicarán a la imagen mencionada*/
+    .our-team img {
+        width: 100%;
+        height: auto;
+        transition: all 0.3s ease-in-out 0s;
+    }
+    /*Características que se le aplicarán a la imagen mencionada cuando el mouse pase sobre ella*/
+    .our-team:hover img {
+        opacity: 0.5;
+    }
+    /*Características que se le aplicarán a la imagen mencionada*/
+    .our-team .team-content {
+        color: #000;
+        opacity: 1;
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        background: #ffffff;
+        padding-left: 55px;
+        width: 100%;
+        transition: all 0.3s ease 0s;
+    }
+    /*Características que se le aplicarán al título*/
+    .our-team .title {
+        display: block;
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0 0 7px 0;
+    }
+    /*Definimos el tamaño del fondo y que será en un block, la clase .post*/
+    .our-team .post {
+        display: block;
+        font-size: 15px;
+    }
+    /*Definimos las características de .our-team .social*/
+    .our-team .social {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 35px;
+        text-align: center;
+        opacity: 0;
+        position: absolute;
+        bottom: 35px;
+        right: 0px;
+        transition: all 0.3s ease 0s;
+    }
+    /*Declaramos la opacidad que se le dará cuando el mouse pase sobre .social*/
+    .our-team:hover .social {
+        opacity: 1;
+    }
+    /*Declaramos que la etiqueta li será un block*/
+    .our-team .social li {
+        display: block;
+    }
+    /*Declaramos las características de las etiquetas li y a, dentro de .our-team*/
+    .our-team .social li a {
+        display: inline-block;
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        background: #000000;
+        font-size: 17px;
+        color: #fff;
+        opacity: 0.9;
+        position: relative;
+        transform: translate(35px, -35px);
+        transition: all 0.3s ease-in-out 0s
+    }
+    /*Declaramos que cuando el mouse este sobre las etiquetas li y a, se aplicarán estos cambios*/
+    .our-team .social li a:hover {
+        width: 35px;
+        background: #b0b435;
+        transition-delay: 0s;
+    }
+    /*Declaramos las características que se le aplicarán al .icon*/
+    .our-team .icon {
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        background: #b0b435;
+        text-align: center;
+        color: #fff;
+        position: absolute;
+        bottom: 0;
+    }
+    /*Declaramos el tamaño que abarcará la descripción*/
+    .team-description {
+        padding: 20px 0px;
+    }
+    /*Declaramos el margen y tamaños de la etiqueta p*/
+    .team-description p {
+        font-size: 14px;
+        margin: 0px;
+    }
+    /*Declaramos la opacidad que se aplicará cuando pase el mouse a .hover-team:hover*/
+    .hover-team:hover .social {
+        opacity: 1;
+    }
+    /*Declaramos la transición que se aplicará cuando pase el mouse a .hover-team:hover*/
+    .hover-team:hover .social li:nth-child(1) a {
+        transition-delay: 0.3s;
+    }
+    /*Declaramos la transición que se aplicará cuando pase el mouse a .hover-team:hover*/
+    .hover-team:hover .social li:nth-child(2) a {
+        transition-delay: 0.2s;
+    }
+    /*Declaramos la transición que se aplicará cuando pase el mouse a .hover-team:hover*/
+    .hover-team:hover .social li:nth-child(3) a {
+        transition-delay: 0.1s;
+    }
+    /*Declaramos la transición que se aplicará cuando pase el mouse a .hover-team:hover*/
+    .hover-team:hover .social li:nth-child(4) a {
+        transition-delay: 0.0s;
+    }
+    /*Declaramos la transición que se aplicará cuando pase el mouse a .hover-team:hover*/
+    .hover-team:hover .social li a {
+        transform: translate(0, 0)
+    }
+    /*Declaramos la opacidad que se aplicará cuando pase el mouse a .hover-team:hover*/
+    .hover-team:hover img {
+        opacity: 0.5;
+    }
+    /*Declaramos el color del borde del botón*/
+    .hover-team .team-content .title {
+        border-bottom: 2px solid #b0b435;
+    }
+    /*Declaramos el tamaño de .shop-box-inner*/
+    .shop-box-inner {
+        padding: 70px 0px;
+    }
+    /*Declaramos la posición de .search-product*/
+    .search-product {
+        position: relative;
+    }
+    /*Declaramos las características que se aplicarán al buscar un producto*/
+    .search-product input[type="text"] {
+        background: #333333;
+        border: 0;
+        box-shadow: none;
+        border-radius: 0;
+        color: #ffffff;
+        height: 55px;
+        font-weight: 300;
+        font-size: 16px;
+        margin-bottom: 15px;
+        padding: 0 20px;
+        -webkit-transition: all .5s ease;
+        -moz-transition: all .5s ease;
+        transition: all .5s ease;
+        width: 100%;
+        outline: 0;
+    }
+    /*Declaramos el cambio de opacidad y color al buscar un producto*/
+    .search-product .form-control::-moz-placeholder {
+        color: #ffffff;
+        opacity: 1;
+    }
+    /*Declaramos las características del botón para buscar un producto*/
+    .search-product button {
+        background: #000000;
+        color: #ffffff;
+        font-size: 18px;
+        position: absolute;
+        right: 0px;
+        padding: 12px 15px;
+        top: 0;
+        line-height: 27px;
+        border: none;
+        cursor: pointer;
+        height: 100%;
+    }
+    /*Declaramos el cambio de color que se le aplicará al botón cuando el mouse este sobre el*/
+    .search-product button:hover {
+        background: #b0b435;
+    }
+    /*Declaramos el margen de la opción de filtrar*/
+    .filter-sidebar-left {
+        margin-bottom: 20px;
+    }
+    /*Declaramos las características de .title-left*/
+    .title-left {
+        font-size: 16px;
+        border-bottom: 3px solid #000000;
+        margin-bottom: 20px;
+    }
+    /*Declaramos el tamaño de la etiqueta h3 dentro de .title-left*/
+    .title-left h3 {
+        font-weight: 700;
+    }
+    /*Declaramos las características de .list-group-item*/
+    .list-group-item {
+        border: none;
+        padding: 5px 20px;
+        font-size: 14px;
+    }
+    /*Declaramos el tamaño de .text-muted*/
+    .text-muted {
+        padding: 10px 0px;
+    }
+    /*Declaramos las cacterísticas de .list-group-item[data-toggle="collapse"]::after, 
+    estos cambios se aplican después*/
+    .list-group-item[data-toggle="collapse"]::after {
+        width: 0;
+        height: 0;
+        position: absolute;
+        top: calc(50% - 12px);
+        right: 10px;
+        content: '';
+        -webkit-transition: top .2s, -webkit-transform .2s;
+        transition: top .2s, -webkit-transform .2s;
+        transition: transform .2s, top .2s;
+        transition: transform .2s, top .2s, -webkit-transform .2s;
+        font-family: FontAwesome;
+        content: "\f105";
+    }
+    /*Declaramos el margen y borde de las clases mencionadas*/
+    .list-group-tree .list-group-collapse .list-group {
+        margin-left: 25px;
+        border-left: 1px solid #ced4da;
+    }
+    /*Declaramos las características de las clases mencionadas*/
+    .list-group-tree .list-group-item.active {
+        color: #b0b435;
+        background-color: #fff;
+        font-weight: 700;
+    }
+    /*Declaramos las características de .list-group-item::before*/
+    .list-group-tree .list-group-collapse .list-group>.list-group-item::before {
+        position: absolute;
+        top: 14px;
+        left: 0;
+        content: '';
+        width: 8px;
+        height: 1px;
+        background-color: #ced4da;
+    }
+    /*Declaramos algunas características que se aplicarán cuando el mouse este sobre esta clase*/
+    .list-group-tree .list-group-item:hover {
+        color: #b0b435;
+        background-color: #fff;
+        outline: 0;
+        font-weight: 700;
+    }
+    /*Declaramos el margen que se le aplicará a .filter-price-left*/
+    .filter-price-left {
+        margin-bottom: 20px;
+    }
+    /*Declaramos las características de .ui-slider-handle*/
+    #slider-range .ui-slider-handle {
+        background-color: #b0b435;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        cursor: pointer;
+        height: 21px;
+        top: -6px;
+        transition: none 0s ease 0s;
+        width: 21px;
+        box-shadow: 0px 0px 6.65px 0.35px rgba(0, 0, 0, 0.15);
+    }
+    /*Declaramos dos características de .ui-slider-range*/
+    #slider-range .ui-slider-range {
+        background-color: #b0b435;
+        border-radius: 0;
+    }
+    /*Declaramos características de #slider-range*/
+    #slider-range {
+        background: #000000;
+        border: medium none;
+        border-radius: 50px;
+        float: left;
+        height: 10px;
+        margin-top: 14px;
+        width: 100%;
+    }
+    /*Agregamos el diseño de las funciones de .price-box-slider*/
+    .price-box-slider p {
+        clear: both;
+        margin-top: 20px;
+        display: inline-block;
+        width: 100%;
+    }
+    /*Declaramos el margen de la etiqueta p*/
+    .price-box-slider p input {
+        margin-top: 5px;
+    }
+    /*Declaramos características de la etiqueta p*/
+    .price-box-slider p button {
+        border: none;
+        color: #ffffff;
+        float: right;
+    }
+    /*Declaramos características de .brand-box*/
+    .brand-box {
+        display: inline-block;
+        width: 100%;
+        height: 259px;
+        position: relative;
+    }
+    /*Declaramos características de .product-item-filter*/
+    .product-item-filter {
+        border-bottom: 1px solid #000000;
+        border-top: 1px solid #000000;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+        padding: 5px 0;
+    }
+    /*Declaramos una característica de .nice-select.wide*/
+    .nice-select.wide {
+        width: 75%;
+    }
+    /*Declaramos características de la etiqueta span*/
+    .product-item-filter .toolbar-sorter-right span {
+        line-height: 42px;
+        padding-right: 15px;
+        float: left;
+    }
+    /*Declaramos características de .toolbar-sorter-right*/
+    .product-item-filter .toolbar-sorter-right {
+        width: 65%;
+    }
+    /*Declaramos que la .toolbar-sorter-right va a la izquierda*/
+    .toolbar-sorter-right {
+        float: left;
+    }
+    /*Declaramos que la .toolbar-sorter-right va a la derecha*/
+    .toolbar-sorter-right .bootstrap-select.form-control:not([class*="col-"]) {
+        width: 77%;
+        float: right;
+    }
+    /*Declaramos características de .bootstrap-select.btn-group*/
+    .toolbar-sorter-right .bootstrap-select.btn-group>.dropdown-toggle {
+        padding: 0px;
+        border-radius: 0px;
+        border: none;
+    }
+    /*Declaramos una característica de la toolbar*/
+    .toolbar-sorter-right .bootstrap-select.btn-group .dropdown-toggle .filter-option {
+        padding-left: 15px;
+    }
+    /*Declaramos el color que tomará .btn-light*/
+    .toolbar-sorter-right .btn-light {
+        background: #000000;
+        color: #ffffff;
+    }
+    /*Declaramos el color que tomará .btn-light:hover al pasar el mouse sobre ella*/
+    .toolbar-sorter-right .btn-light:hover {
+        background: #b0b435;
+        border-radius: 0px;
+        border: none;
+    }
+    /*Declaramos el color del fondo de .btn-light.dropdown-toggle*/
+    .toolbar-sorter-right .show>.btn-light.dropdown-toggle {
+        background-color: #b0b435;
+    }
+    /*Declaramos el color de las clases mencionadas */
+    .toolbar-sorter-right .bootstrap-select .dropdown-toggle:focus {
+        background: #b0b435;
+    }
+    /*Declaramos la posición y tamaño de las clases mencionadas*/
+    .toolbar-sorter-right .dropup .dropdown-toggle::after {
+        position: absolute;
+        right: 15px;
+        top: 18px;
+    }
+   /*Termina el código comentado por: Meza Moreno Alejandra*/
+    .product-item-filter {
+        border-bottom: 1px solid #000000;
+        border-top: 1px solid #000000;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+        padding: 5px 0;
+    }
+    
+    .nice-select.wide {
+        width: 75%;
+    }
+    
+    .product-item-filter .toolbar-sorter-right span {
+        line-height: 42px;
+        padding-right: 15px;
+        float: left;
+    }
+    
+    .product-item-filter .toolbar-sorter-right {
+        width: 65%;
+    }
+    
+    .toolbar-sorter-right {
+        float: left;
+    }
+    
+    .toolbar-sorter-right .bootstrap-select.form-control:not([class*="col-"]) {
+        width: 77%;
+        float: right;
+    }
+    
+    .toolbar-sorter-right .bootstrap-select.btn-group>.dropdown-toggle {
+        padding: 0px;
+        border-radius: 0px;
+        border: none;
+    }
+    
+    .toolbar-sorter-right .bootstrap-select.btn-group .dropdown-toggle .filter-option {
+        padding-left: 15px;
+    }
+    
+    .toolbar-sorter-right .btn-light {
+        background: #000000;
+        color: #ffffff;
+    }
+    
+    .toolbar-sorter-right .btn-light:hover {
+        background: #b0b435;
+        border-radius: 0px;
+        border: none;
+    }
+    
+    .toolbar-sorter-right .show>.btn-light.dropdown-toggle {
+        background-color: #b0b435;
+    }
+    
+    .toolbar-sorter-right .bootstrap-select .dropdown-toggle:focus {
+        background: #b0b435;
+    }
+    
+    .toolbar-sorter-right .dropup .dropdown-toggle::after {
+        position: absolute;
+        right: 15px;
+        top: 18px;
+    }
+    
+    .product-item-filter p {
+        float: right;
+        line-height: 42px;
+    }
+    
+    .product-item-filter .nav-tabs {
+        border: none;
+        float: right;
+    }
+    
+    .nav>li {
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    
+    .product-item-filter li .nav-link {
+        border: none;
+        border-radius: 0px;
+        color: #111111;
+        font-size: 18px;
+        padding: 4px 12px;
+    }
+    
+    .product-item-filter li .nav-link.active {
+        background: #b0b435;
+        border: none;
+        color: #ffffff;
+    }
+    
+    .product-item-filter li .nav-link:hover {
+        background: #000000;
+        border: none;
+        color: #ffffff;
+    }
+    
+    .product-categori {
+        margin-bottom: 30px;
+    }
+    
+    .product-categorie-box {
+        margin-top: 20px;
+    }
+    
+    .tab-content,
+    .tab-pane {
+        width: 100%;
+    }
+    
+    .why-text.full-width h4 {
+        font-size: 24px;
+        font-weight: 700;
+        padding-bottom: 15px;
+    }
+    
+    .why-text.full-width h5 del {
+        font-size: 13px;
+        color: #666;
+    }
+    
+    .why-text.full-width h5 {
+        color: #000000;
+        font-weight: 700;
+    }
+    
+    .why-text.full-width p {
+        padding-bottom: 20px;
+    }
+    
+    .why-text.full-width a {
+        padding: 10px 20px;
+        font-weight: 700;
+        color: #ffffff;
+        border: none;
+    }
+    
+    .list-view-box {
+        margin-bottom: 30px;
+    }
+    
+    .list-view-box:hover .mask-icon {
+        -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=100)";
+        filter: alpha(opacity=100);
+        opacity: 1;
+        top: 0px;
+        -webkit-transition-delay: 0s;
+        -moz-transition-delay: 0s;
+        -o-transition-delay: 0s;
+        -ms-transition-delay: 0s;
+        transition-delay: 0s;
+        -webkit-animation: bounceY 0.9s linear;
+        -moz-animation: bounceY 0.9s linear;
+        -ms-animation: bounceY 0.9s linear;
+        animation: bounceY 0.9s linear;
+    }
+    
+    .cart-box-main {
+        padding: 70px 0px;
+    }
+    
+    .table-main table thead {
+        background: #b0b435;
+        color: #ffffff;
+    }
+    
+    .table-main .table thead th {
+        font-size: 18px;
+    }
+    
+    .table-main table td.thumbnail-img {
+        width: 120px;
+    }
+    
+    .table-main table td {
+        vertical-align: middle;
+        font-size: 16px;
+    }
+    
+    .quantity-box input {
+        width: 60px;
+        border: 2px solid #000000;
+        text-align: center;
+    }
+    
+    .quantity-box input:focus {
+        border-color: #b0b435;
+    }
+    
+    .name-pr a {
+        font-weight: 700;
+        font-size: 18px;
+        color: #000000;
+    }
+    
+    .remove-pr {
+        text-align: center;
+    }
+    
+    .coupon-box .input-group .form-control {
+        min-height: 50px;
+        border-radius: 0px;
+        font-weight: 400;
+        border: 1px solid #e8e8e8;
+        box-shadow: none !important;
+    }
+    
+    .coupon-box .input-group .form-control::-moz-placeholder {
+        color: #000000;
+    }
+    
+    .coupon-box .input-group .input-group-append .btn-theme {
+        background: #000000;
+        color: #ffffff;
+        border: none;
+        border-radius: 0px;
+        font-size: 16px;
+        padding: 0px 20px;
+    }
+    
+    .coupon-box .input-group .input-group-append .btn-theme:hover {
+        background: #b0b435;
+    }
+    
+    .update-box input[type="submit"] {
+        background: #000000;
+        border: medium none;
+        border-radius: 0;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        color: #fff;
+        display: inline-block;
+        float: right;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        height: 50px;
+        line-height: 40px;
+        margin-right: 15px;
+        padding: 0 20px;
+        text-shadow: none;
+        text-transform: uppercase;
+        -webkit-transition: all 0.3s ease 0s;
+        transition: all 0.3s ease 0s;
+        white-space: nowrap;
+        width: inherit;
+    }
+    
+    .update-box input[type="submit"]:hover {
+        background: #b0b435;
+    }
+    
+    .order-box h3 {
+        font-size: 16px;
+        color: #222222;
+        font-weight: 700;
+    }
+    
+    .order-box h4 {
+        font-size: 16px;
+        padding: 0px;
+        line-height: 35px !important;
+    }
+    
+    .order-box .font-weight-bold {
+        font-size: 18px;
+    }
+    
+    .gr-total h5 {
+        font-weight: 700;
+        color: #b0b435;
+        font-size: 18px;
+        margin: 0px;
+        padding: 0px;
+        line-height: 35px !important;
+    }
+    
+    .gr-total .h5 {
+        margin: 0px;
+        font-weight: 700;
+        line-height: 35px;
+    }
+    
+    .my-account-box-main {
+        padding: 70px 0px;
+    }
+    
+    .shopping-box a {
+        font-size: 18px;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+    }
+    
+    .payment-icon {
+        display: inline-block;
+        padding: 10px 0px;
+    }
+    
+    .payment-icon ul li {
+        width: 20%;
+        float: left;
+    }
+    
+    .needs-validation label {
+        font-size: 16px;
+        margin-bottom: 0px;
+        line-height: 24px;
+    }
+    
+    .needs-validation .form-control {
+        min-height: 40px;
+        border-radius: 0px;
+        border: 1px solid #e8e8e8;
+        box-shadow: none !important;
+        font-size: 14px;
+    }
+    
+    .needs-validation .form-control:focus {
+        border: 1px solid #b0b435 !important;
+    }
+    
+    .review-form-box .form-control {
+        min-height: 40px;
+        border-radius: 0px;
+        border: 1px solid #e8e8e8;
+        box-shadow: none !important;
+        font-size: 14px;
+    }
+    
+    .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+        background-color: #b0b435;
+        box-shadow: none;
+    }
+    
+    .custom-radio .custom-control-input:checked~.custom-control-label::before {
+        background-color: #b0b435;
+        box-shadow: none;
+    }
+    
+    .new-account-login h5 {
+        font-size: 18px;
+        color: #111111;
+        font-weight: 600;
+    }
+    
+    .new-account-login h5 a:hover {
+        color: #b0b435;
+    }
+    
+    .review-form-box button {
+        padding: 10px 20px;
+        color: #ffffff;
+        font-size: 18px;
+        border: none;
+    }
+    
+    .wide.w-100 {
+        min-height: 40px;
+        border: 1px solid #e8e8e8;
+    }
+    
+    .wide.w-100 option {
+        min-height: 40px;
+    }
+    
+    .custom-control-input:focus~.custom-control-label::before {
+        box-shadow: none;
+    }
+    
+    .odr-box a {
+        font-size: 18px;
+        color: #111111;
+        font-weight: 700;
+    }
+    
+    .account-box {
+        text-align: center;
+        background: #ffffff;
+        padding: 30px;
+        border: 1px solid #000000;
+    }
+    
+    .bottom-box {
+        border-top: 1px solid #eee;
+        margin-bottom: 30px;
+        margin-top: 30px;
+        padding-top: 15px;
+    }
+    
+    .bottom-box .account-box {
+        min-height: 205px;
+    }
+    
+    .account-box {
+        border: 2px solid #000000;
+        margin-top: 15px;
+    }
+    
+    .my-account-page a {
+        color: #000000;
+    }
+    
+    .my-account-page a:hover {
+        color: #b0b435;
+    }
+    
+    .service-icon i {
+        font-size: 34px;
+    }
+    
+    .service-desc p {
+        font-size: 16px;
+    }
+    
+    .service-desc h4 {
+        text-decoration: underline;
+        font-size: 18px;
+        font-weight: 700;
+    }
+    
+    .service-icon a {
+        background: rgba(0, 0, 0, 0.9);
+        -webkit-transition: -webkit-transform ease-out 0.1s, background 0.2s;
+        -moz-transition: -moz-transform ease-out 0.1s, background 0.2s;
+        transition: transform ease-out 0.1s, background 0.2s;
+    }
+    
+    .service-icon a {
+        display: inline-block;
+        font-size: 0px;
+        cursor: pointer;
+        margin: 15px 0px;
+        width: 90px;
+        height: 90px;
+        line-height: 110px;
+        border-radius: 50%;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+        color: #ffffff;
+    }
+    
+    .service-icon a::after {
+        pointer-events: none;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        content: '';
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
+        content: "";
+        top: 0;
+        left: 0;
+        padding: 0;
+        z-index: -1;
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+        opacity: 0;
+        -webkit-transform: scale(0.9);
+        -moz-transform: scale(0.9);
+        -ms-transform: scale(0.9);
+        transform: scale(0.9);
+    }
+    
+    .service-icon a:hover::after {
+        -webkit-animation: sonarEffect 1.3s ease-out 75ms;
+        -moz-animation: sonarEffect 1.3s ease-out 75ms;
+        animation: sonarEffect 1.3s ease-out 75ms;
+    }
+    
+    .service-icon a:hover {
+        background: rgba(251, 183, 20, 1);
+        -webkit-transform: scale(0.93);
+        -moz-transform: scale(0.93);
+        -ms-transform: scale(0.93);
+        transform: scale(0.93);
+        color: #fff;
+    }
+    
+    @-webkit-keyframes sonarEffect {
+        0% {
+            opacity: 0.3;
+        }
+        40% {
+            opacity: 0.5;
+            box-shadow: 0 0 0 2px rgba(0, 53, 68, 0.1), 0 0 10px 10px #b0b435, 0 0 0 10px rgba(0, 53, 68, 0.5);
+        }
+        100% {
+            box-shadow: 0 0 0 2px rgba(0, 53, 68, 0.1), 0 0 10px 10px #b0b435, 0 0 0 10px rgba(0, 53, 68, 0.5);
+            -webkit-transform: scale(1.5);
+            opacity: 0;
+        }
+    }
+    
+    @-moz-keyframes sonarEffect {
+        0% {
+            opacity: 0.3;
+        }
+        40% {
+            opacity: 0.5;
+            box-shadow: 0 0 0 2px rgba(0, 53, 68, 0.1), 0 0 10px 10px #b0b435, 0 0 0 10px rgba(0, 53, 68, 0.5);
+        }
+        100% {
+            box-shadow: 0 0 0 2px rgba(0, 53, 68, 0.1), 0 0 10px 10px #b0b435, 0 0 0 10px rgba(0, 53, 68, 0.5);
+            -moz-transform: scale(1.5);
+            opacity: 0;
+        }
+    }
+    
+    @keyframes sonarEffect {
+        0% {
+            opacity: 0.3;
+        }
+        40% {
+            opacity: 0.5;
+            box-shadow: 0 0 0 2px rgba(0, 53, 68, 0.1), 0 0 10px 10px #b0b435, 0 0 0 10px rgba(0, 53, 68, 0.5);
+        }
+        100% {
+            box-shadow: 0 0 0 2px rgba(0, 53, 68, 0.1), 0 0 10px 10px #3851bc, 0 0 0 10px rgba(0, 53, 68, 0.5);
+            transform: scale(1.5);
+            opacity: 0;
+        }
+    }
+    
+    .add-pr a {
+        padding: 10px 20px;
+        font-weight: 700;
+        color: #ffffff;
+        border: none;
+    }
+    
+    .wishlist-box-main {
+        padding: 70px 0px;
+    }
+    
+    .services-box-main {
+        padding: 70px 0px;
+    }
+    
+    .contact-box-main {
+        padding: 70px 0px;
+    }
+    
+    .contact-info-left {
+        padding: 20px;
+        background: url(../images/contact-bg.jpg) no-repeat center;
+        background-size: cover;
+    }
+    
+    .contact-info-left h2 {
+        font-size: 22px;
+        font-weight: 700;
+    }
+    
+    .contact-info-left p {
+        margin-bottom: 15px;
+    }
+    
+    .contact-info-left ul li {
+        margin-bottom: 12px;
+    }
+    
+    .contact-info-left ul li p {
+        font-size: 16px;
+        color: #222222;
+        font-weight: 300;
+        padding-right: 16px;
+        padding-left: 25px;
+        line-height: 24px;
+        position: relative;
+    }
+    
+    .contact-info-left ul li p i {
+        position: absolute;
+        left: 0;
+        top: 5px;
+        padding-right: 6px;
+        color: #b0b435;
+    }
+    
+    .contact-info-left ul li p a:hover {
+        color: #b0b435;
+    }
+    
+    .contact-form-right {
+        padding: 20px;
+    }
+    
+    .contact-form-right h2 {
+        font-size: 24px;
+        font-weight: 700;
+    }
+    
+    .contact-form-right p {
+        margin-bottom: 15px;
+    }
+    
+    .contact-form-right .form-group .form-control::-moz-placeholder {
+        color: #999999;
+    }
+    
+    .contact-form-right .form-group .form-control {
+        border-radius: 0px;
+        min-height: 40px;
+    }
+    
+    .contact-form-right .form-group {
+        margin-bottom: 30px;
+        position: relative;
+    }
+    
+    .contact-form-right .form-group .form-control:focus {
+        border: 1px solid #b0b435;
+        box-shadow: none;
+    }
+    
+    .submit-button button {
+        padding: 10px 20px;
+        font-weight: 700;
+        color: #ffffff;
+        border: none;
+    }
+    
+    .help-block.with-errors {
+        position: absolute;
+        right: 0;
+        background: red;
+        color: #fff;
+        padding: 0px 15px;
+    }
+    
+    .help-block ul li {
+        color: #fff;
+    }
+    
+    .shop-detail-box-main {
+        padding: 70px 0px;
+    }
+    
+    .single-product-slider .carousel-control-prev {
+        bottom: auto;
+        background: #111111;
+        width: 6%;
+        padding: 10px 0;
+        background-image: none;
+        top: 40%;
+    }
+    
+    .single-product-slider .carousel-control-next {
+        bottom: auto;
+        background: #111111;
+        width: 6%;
+        padding: 10px 0;
+        background-image: none;
+        top: 40%;
+    }
+    
+    .single-product-slider .carousel-indicators li img {
+        opacity: 0.5;
+    }
+    
+    .single-product-slider .carousel-indicators li.active img {
+        opacity: 1;
+    }
+    
+    .carousel-indicators {
+        position: relative;
+        bottom: 0;
+        background: #000000;
+    }
+    
+    .carousel-indicators li {
+        width: 30%;
+        height: 100%;
+        cursor: pointer;
+    }
+    
+    .single-product-details h2 {
+        color: #000000;
+        font-weight: 700;
+        font-size: 24px;
+    }
+    
+    .single-product-details h5 {
+        color: #b0b435;
+        font-weight: 700;
+        font-size: 18px;
+    }
+    
+    .single-product-details h5 del {
+        font-size: 13px;
+        color: #666;
+    }
+    
+    .available-stock span {
+        font-size: 15px;
+    }
+    
+    .available-stock span a {
+        color: #b0b435;
+    }
+    
+    .single-product-details h4 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-top: 20px;
+    }
+    
+    .single-product-details p {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+    
+    .single-product-details ul {
+        display: inline-block;
+        width: 100%;
+        border: 1px #000000 dashed;
+        margin-bottom: 30px;
+    }
+    
+    .single-product-details ul li {
+        width: 50%;
+        float: left;
+        padding: 0px 15px;
+    }
+    
+    .size-st .bootstrap-select>.dropdown-toggle.btn-light {
+        background: #000000;
+        border: none;
+        border-radius: 0px;
+        color: #ffffff;
+    }
+    
+    .quantity-box input {
+        width: 100%;
+    }
+    
+    .price-box-bar {
+        margin-bottom: 30px;
+    }
+    
+    .price-box-bar a {
+        padding: 10px 20px;
+        font-weight: 700;
+        color: #ffffff;
+        border: none;
+    }
+    
+    .add-to-btn .add-comp {
+        float: left;
+    }
+    
+    .add-to-btn .share-bar {
+        float: right;
+    }
+    
+    .add-comp a {
+        padding: 10px 20px;
+        font-weight: 700;
+        color: #ffffff;
+        border: none;
+    }
+    
+    .share-bar a {
+        background: #b0b435;
+        color: #ffffff;
+        padding: 5px 10px;
+        display: inline-block;
+        width: 34px;
+        text-align: center;
+    }
+    
+    .featured-products-box .owl-nav {
+        position: absolute;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        bottom: -20px;
+        text-align: center;
+    }
+    
+    .featured-products-box .owl-nav button.owl-prev {
+        background: #000000;
+        color: #ffffff;
+        width: 38px;
+        height: 38px;
+        text-align: center;
+    }
+    
+    .featured-products-box .owl-nav button.owl-next {
+        background: #000000;
+        color: #ffffff;
+        width: 38px;
+        height: 38px;
+        text-align: center;
+    }
+    
+    .featured-products-box .owl-nav button.owl-prev:hover,
+    .featured-products-box .owl-nav button.owl-next:hover {
+        background: #b0b435;
+    }
+    
+    .table-responsive .table td,
+    .table-responsive .table th {
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+    
+    .card-outline-secondary .card-body a {
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 700;
+        padding: 12px 25px;
+        border: none;
+    }
+    /* ------------------------- */
+    /* Mediaqueies */
+    /* ------------------------- */
+    
+    @media screen and (max-width: 1000px) {
+        .menu .contenedor-enlaces-nav {
+            padding: 0 10px;
+        }
+        .menu .contenedor {
+            width: 100%;
+        }
+    }
+    
+    @media screen and (max-width: 800px) {
+        .menu .contenedor {
+            width: 90%;
+        }
+        .menu .contenedor-botones-menu {
+            display: flex;
+        }
+        .menu .contenedor-enlaces-nav {
+            padding: 20px;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            position: fixed;
+            left: 0;
+            background: #232F3F;
+            height: 100vh;
+            width: 80%;
+            z-index: 2000;
+            transition: .3s ease all;
+            transform: translate(-100%);
+        }
+        .menu .contenedor-enlaces-nav.activo {
+            transform: translate(0%);
+        }
+        .menu .btn-departamentos {
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        .menu .btn-departamentos i {
+            position: static;
+            margin-left: 20px;
+            transform: rotate(-90deg);
+        }
+        .menu .enlaces {
+            width: 100%;
+        }
+        .menu .enlaces a {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+        }
+        .grid {
+            display: grid;
+            transition: .3s ease all;
+            transform: translateX(-100%);
+            z-index: 3000;
+            width: 80%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            grid-template-areas: "categorias categorias categorias categorias";
+        }
+        .grid.activo {
+            transform: translateX(0%);
+        }
+        .grid::before {
+            display: none;
+        }
+        .grid .btn-regresar {
+            display: inline-block;
+        }
+        .grid .categorias .subtitulo {
+            display: block;
+        }
+        .grid .contenedor-subcategorias {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            transition: .3s ease all;
+            transform: translateX(-100%);
+            overflow: auto;
+        }
+        .grid .contenedor-subcategorias.activo {
+            transform: translateX(0%);
+        }
+        .grid .contenedor-subcategorias .subcategoria {
+            grid-template-columns: 1fr;
+        }
+        .grid .contenedor-subcategorias .banner-subcategoria {
+            width: 100%;
+            min-height: 250px;
+            max-height: 350px;
+        }
+        .grid .enlaces-subcategoria {
+            min-height: 50vh;
+            overflow: auto;
+        }
+        .grid .contenedor-subcategorias .galeria-subcategoria a {
+            width: 25%;
+            height: 100%;
+        }
+    }
+
+    /*SAMANTHA*/
+    .Sami{
+        margin: 15px 8vh;
+        padding: 10px;
+        padding-left: 10px;
+        background: white;
+        
+    }
+    .Sami table td{
+        position: center;
+        padding: 0px 0px 20px 25vh;
+        width: 70vh;
+    }
+    .registrar{
+        margin: 3px;
+        padding: 10px 10px 10px 10px;
+        background: #000000;
+        color: white;
+        font-family: "times new roman";
+        font-size: 12pt;
+        cursor: pointer;
+    }
+    .registrar:hover{
+        margin: 3px;
+        padding: 15px 15px 15px 15px;
+        background: rgba(165, 39, 39, 0.925);
+        color: black;
+        font-family: garamond;
+        font-size: 12pt;
+        border-radius: 5px;
+    }
+    .ingresar:hover{
+        margin: 3px;
+        padding: 15px 15px 15px 15px;
+        background:rgba(165, 39, 39, 0.925);
+        color: black;
+        font-family: garamond;
+        font-size: 12pt;
+        border-radius: 5px;
+    }
+    .redondeado {
+        border-radius:5px
+    }
+    input{
+        padding:10px;
+        margin:9px;
+    }
+
+    .site-blocks-table {
+        overflow: auto; }
+        .site-blocks-table .product-thumbnail {
+          width: 200px; }
+        .site-blocks-table thead th {
+          padding: 30px;
+          text-align: center;
+          border-width: 1px !important;
+          vertical-align: middle;
+          color: #212529;
+          font-size: 18px; }
+        .site-blocks-table td {
+          padding: 20px;
+          text-align: center;
+          vertical-align: middle;
+          color: #212529; }
+        .site-blocks-table tbody tr:first-child td {
+          border-top: 1px solid #7971ea !important; }
+      
+      .site-block-order-table th {
+        border-top: none !important;
+        border-bottom-width: 1px !important; }
+      
+      .site-block-order-table td, .site-block-order-table th {
+        color: #000; }
+
+
+
+.RDimg{
+    padding: 50px;
+    color: blue;
+}
+
+/*Shop.php*/
+.RDtabla{
+    width: 100vh;
+    border-style: groove;
+    border: 2px solid #17D800;
+}
+/*Recibo.php*/
+.RDrecibo{
+    text-align: center;
+    margin: 5vh 68vh;
+    background-color: white;
+    min-height: 80vh;
+}
+.RDespacio{
+    margin: 4vh;
+    padding-top: 4vh;
+    line-height: 2.5em; 
+}
+.RDespacio table{
+    width: 80%;
+    text-align: center;
+}
+.RDR{
+    margin: 4vh;
+    padding: 13px;
+    text-align: center;
+    background-color: black;
+    color: white;
+    font-size: 14pt;
+    font-family: "times new roman";
+    border-radius: 5px;
+    border:2px solid white;
+}
+.RDR:hover{
+    background-color: white;
+    color: black;
+    border-color: black;
+    transition: .5s;
+}
+/*Navegador*/
+#Rnavegador{
+    padding: 10px 20px;
+    background-color: #4520B9;
+    color: white;
+    border: 0px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#Rnavegador:hover{
+    background-color: #7320B9;
+    transition: 1s;
+    border: 1px solid white;
+}
+#RDG table a{
+    text-decoration: none;
+}
+
+/*===Paginador===*/
+.paginador ul{
+    padding: 15px;
+    list-style:none;
+    background-color: white;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.paginador a{
+    color: #428bca;
+    border: 1px solid #ddd;
+    padding:  5px;
+    display: inline-block;
+    font-size: 14px;
+    text-align:center;
+    width: 35px;
+    color:black;
+    
+}
+
+.paginador a:hover{
+    background:orange;
+}
+
+.pageSelected{
+    color:white;
+    background-color:orange;
+    width: 35px;
+    text-align:center;
+    border: 1px solid orange;
+}
+/*==Cantidad==*/
+.btnEl{
+    background-color:orange;
+    color:white;
+    font-size:15;
+    text-align:center;
+    display: inline-block;
+    width:30px;
+}
